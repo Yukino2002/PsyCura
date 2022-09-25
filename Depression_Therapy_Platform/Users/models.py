@@ -1,4 +1,7 @@
 from django.db import models
+import sys
+sys.path.append("..")
+from Services.models import Forum
 from django.core.validators import RegexValidator,MaxValueValidator,MinValueValidator
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
@@ -48,24 +51,29 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def _str_(self):
-        return self.user.first_name + self.user.last_name
+        return self.email
 
 
 class Patient(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
+    wallet_balance = models.PositiveIntegerField(default=0)
     past_diseases = models.CharField(max_length=1000,blank=True,null=True)
     past_medication = models.CharField(max_length=1000,blank=True,null=True)
 
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, null=True, blank=True)
+
     def __str__(self):
-        return self.user.first_name + self.user.last_name
+        return self.user.first_name + ' ' + self.user.last_name
+
 
 class Doctor(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
+    wallet_balance = models.PositiveIntegerField(default=0)
     qualifications = models.CharField(max_length=1000,blank=True,null=True)
     approved = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.first_name + self.user.last_name
+        return self.user.first_name + ' ' + self.user.last_name
 
 
 class Sponsor(models.Model):
@@ -74,5 +82,7 @@ class Sponsor(models.Model):
     organization_name = models.CharField(max_length=100,blank=True,null=True)
     approved = models.BooleanField(default=False)
 
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, null=True, blank=True)
+
     def __str__(self):
-        return self.user.first_name + self.user.last_name
+        return self.user.first_name + ' ' + self.user.last_name
