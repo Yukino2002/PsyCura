@@ -5,8 +5,8 @@ from Users.models import Patient, Doctor, Sponsor
 
 
 class Appointment(models.Model):
-    date = models.DateField()
-    time = models.TimeField()
+    date = models.DateField(default=None)
+    time = models.TimeField(default=None)
     prescription = models.CharField(max_length=1000, blank=True, null=True)
     approved = models.BooleanField(default=False)
 
@@ -18,9 +18,9 @@ class Appointment(models.Model):
 
 
 class Transaction(models.Model):
-    date = models.DateField()
-    time = models.TimeField()
-    amount = models.PositiveIntegerField()
+    date = models.DateField(default=None)
+    time = models.TimeField(default=None)
+    amount = models.PositiveIntegerField(default=0)
 
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)

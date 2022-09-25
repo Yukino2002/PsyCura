@@ -3,3 +3,4 @@ from .models import *
 
 
 admin.site.register(Forum)
+admin.site.register(Session)
