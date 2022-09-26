@@ -14,3 +14,17 @@ def about(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
+
+def sign_in(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return redirect('Users:profile')
+        else:
+            return render(request, 'sign_in.html')
+
+
+def sign_up(request):
+    return render(request, 'sign_up.html')
+
+

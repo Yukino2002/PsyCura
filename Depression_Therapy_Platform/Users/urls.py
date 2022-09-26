@@ -7,5 +7,5 @@ app_name = 'Users'
 
 
 urlpatterns = [
-    path('', views.sign_in, name='sign_in'),
+    path('profile/', views.profile, name='profile'),
 ]
