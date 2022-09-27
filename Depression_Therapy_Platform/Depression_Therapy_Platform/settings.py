@@ -122,11 +122,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-
-#ADDED MANUALLY
+import os
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    '/var/www/static/',
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 # Default primary key field type
