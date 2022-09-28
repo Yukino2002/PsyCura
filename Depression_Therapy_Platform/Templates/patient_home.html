@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!-- ***** Preloader Start ***** -->
+<div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<!-- ***** Preloader End ***** -->
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="/" class="logo">
+                        <h1 style="color: white; font-family: 'Comic Sans MS'; margin-top: 10px;">PsyCure</h1>
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="/">Home</a></li>
+
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ***** Header Area End ***** -->
+
+
+<div class="dash-content">
+    <div class="dashboard"></div>
+    <h1 style="color:white; display: inline;">Dashboard here</h1>
+
+</div>
+{% endblock %}
+
+{% block footer %}
+<script>
+    $(".option").click(function () {
+        $(".option").removeClass("active");
+        $(this).addClass("active");
+    });
+</script>
+{% endblock %}

@@ -27,3 +27,23 @@
     color: #22b3c1;
     opacity: 100%;
 }
+
+.dash-content
+{
+    display: block;
+    margin-top: 70px;
+    background: url(../images/patient_dash_img.jpg) no-repeat center center;
+    padding: 20px;
+
+
+}
+
+.dashboard
+{
+    background: url(../images/patient_dash_img.jpg) no-repeat center center;
+    border-radius: 20px;
+    padding: 50px;
+    filter:blur(8px) brightness(70%);
+
+}
+    
