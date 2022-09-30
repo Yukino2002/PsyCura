@@ -19,7 +19,7 @@
     padding-right: 20px;
     border: 1px solid white;
     border-radius: 20px;
-}
+} 
 
 #login:hover
 {
@@ -27,6 +27,7 @@
     color: #22b3c1;
     opacity: 100%;
 }
+
 
 .dash-content
 {
@@ -47,3 +48,23 @@
 
 }
     
+input[type="file"]
+{
+    display: none;
+}
+
+.fileinput
+{
+    cursor: pointer;
+    margin-bottom: 20px;
+    border: 1px solid;
+    border-radius: 23px;
+    padding: 10px;
+    display: block;
+}
+
+.fileinput.fileinputbtn
+{
+    width:fit-content;
+}
+
