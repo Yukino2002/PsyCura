@@ -1,50 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block body %}
-<!-- ***** Preloader Start ***** -->
-<div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-        <span class="dot"></span>
-        <div class="dots">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
-<!-- ***** Preloader End ***** -->
+{% block navbar %}
+<li><a href="/" class="active">Home</a></li>
+<li><a href="{% url 'about' %}">About</a></li>
+<li><a href="{% url 'contact' %}">Contact Us</a></li>
+<li><a href="{% url 'sign_up' %}" id="sign-up">Sign-Up</a></li>
+<li><a href="{% url 'sign_in' %}" id="login">Login</a></li>
+{% endblock %}
 
-<!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="/" class="logo">
-                        <h1 style="color:white;font-family:'Comic Sans MS';margin-top: 10px;">PsyCura</h1>
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="/" class="active">Home</a></li>
-                        <li><a href="{% url 'about' %}">About</a></li>
-                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
-                        <li><a href="{% url 'sign_up' %}" id="sign-up">Sign-Up</a></li>
-                        <li><a href="{% url 'sign_in' %}" id="login">Login</a></li>
-                    </ul>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-<!-- ***** Header Area End ***** -->
-
+{% block main %}
 <!-- ***** Main Banner Area Start ***** -->
 <section id="section-1">
     <div class="content-slider">
@@ -53,7 +18,7 @@
         <input type="radio" id="banner3" class="sec-1-input" name="banner">
         <input type="radio" id="banner4" class="sec-1-input" name="banner">
         <div class="slider">
-            <div id="top-banner-1" class="banner">
+            <div id="top-banner-1" class="vbarbanner">
                 <div class="banner-inner-wrapper header-text">
                     <div class="main-caption">
                         <h2>Your one stop destination for mental health</h2>
@@ -339,9 +304,6 @@
     </div>
 </footer>
 {% endblock %}
-
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript -->
 
 {% block footer %}
 <script>
