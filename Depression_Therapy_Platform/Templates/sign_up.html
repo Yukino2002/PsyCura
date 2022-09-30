@@ -1,35 +1,14 @@
 {% extends 'base.html' %}
-{% block body %}
-<!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="/" class="logo">
-                        <h1 style="color: white; font-family: 'Comic Sans MS'; margin-top: 10px;">PsyCura</h1>
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="{% url 'about' %}" class="active">About</a></li>
-                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
-                        <li><a href="signup.html" id="sign-up">Sign-Up</a></li>
-                        <li><a href="login.html" id="login">Login</a></li>
-                    </ul>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-<!-- ***** Header Area End ***** -->
 
+{% block main %}
+<li><a href="/">Home</a></li>
+<li><a href="{% url 'about' %}" class="active">About</a></li>
+<li><a href="{% url 'contact' %}">Contact Us</a></li>
+<li><a href="signup.html" id="sign-up">Sign-Up</a></li>
+<li><a href="login.html" id="login">Login</a></li>
+{% endblock %}
+
+{% block main %}
 <div class="category-form">
     <div class="form-container">
         <div class="col-lg-12">
@@ -57,6 +36,7 @@
     </div>
 </div>
 {% endblock %}
+
 {% block footer %}
 <script>
     $(".option").click(function () {

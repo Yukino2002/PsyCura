@@ -1,130 +1,114 @@
 {% extends 'base.html' %}
-{% block body %}
-<!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="/" class="logo">
-                        <h1 style="color: white; font-family: 'Comic Sans MS'; margin-top: 10px;">PsyCura</h1>
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="{% url 'about' %}" class="active">About</a></li>
-                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
-                        <li><a href="signup.html" id="sign-up">Sign-Up</a></li>
-                        <li><a href="login.html" id="login">Login</a></li>
-                    </ul>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-<!-- ***** Header Area End ***** -->
 
+{% block navbar %}
+<li><a href="/">Home</a></li>
+<li><a href="{% url 'about' %}" class="active">About</a></li>
+<li><a href="{% url 'contact' %}">Contact Us</a></li>
+<li><a href="signup.html" id="sign-up">Sign-Up</a></li>
+<li><a href="login.html" id="login">Login</a></li>
+{% endblock %}
+
+{% block main %}
 <div class="reservation-form">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <form id="reservation-form" name="gs" method="submit" role="search" action="#" method="POST">
-            <div class="row">
-              <div class="col-lg-12">
-                <h4>Sign up to <em>PsyCura</em> through this <em>Form</em> </h4>
-              </div>
-              <div class="col-lg-6">
-                  <fieldset>
-                      <label for="FName" class="form-label">First Name<b>*</b>
-                      </label>
-                      <input type="text" name="FName" class="Name" placeholder="Ex.John" autocomplete="on" required>
-                  </fieldset>
-              </div>
-              <div class="col-lg-6">
-                <fieldset>
-                    <label for="LName" class="form-label">Last Name<b>*</b>
-                    </label>
-                    <input type="text" name="LName" class="Name" placeholder="Ex. Capaldi" autocomplete="on" required>
-                </fieldset>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <form id="reservation-form" name="gs" method="submit" role="search" action="#" method="POST">
+          <div class="row">
+            <div class="col-lg-12">
+              <h4>Sign up to <em>PsyCura</em> through this <em>Form</em> </h4>
             </div>
-              <div class="col-lg-6">
-                <fieldset>
-                    <label for="DOB" class="form-label">Date of Birth<b>*</b></label>
-                    <input type="date" name="DOB" class="date" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-6">
-                <fieldset>
-                    <label for="Phone" class="form-label">Phone Number<b>*</b></label>
-                    <input type="text" name="Phone" class="Number" placeholder="Ex. +xxx xxx xxx" autocomplete="on" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-6">
-                <fieldset>
-                    <label for="email" class="form-label">Email ID<b>*</b></label>
-                    <input type="email" name="email" class="email" placeholder="Ex. abcd@efgh.com" autocomplete="on" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-6">
-                <fieldset>
-                    <label for="Gender"class="form-label">Gender<b>*</b></label>
-                    <select name="Gender" id="gender" class="form-select">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Non-binary">Non-binary</option>
-                    </select>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                    <label for="medfile" class="form-label">
-                        Add Medical File
-                    </label>
-                    <input type="text" name="Medfile" id="medfile" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                    <label for="Username" class="form-label">Username<b>*</b></label>
-                    <input type="text" name="Username" class="Name" placeholder="Enter username" autocomplete="on" style="display:'block';" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                    <label for="Password" class="form-label">Password<b>*</b</label>
-                    <input type="password" name="Password" class="Name" placeholder="Enter your password" autocomplete="on" style="display: 'block';" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                    <label for="Confirm_password" class="form-label">Confirm Password<b>*</b></label>
-                    <input type="password" name="Confirm_password" class="Name" placeholder="Confirm your password" autocomplete="on" style="display: 'block';" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">                        
-                  <fieldset>
-                      <button class="main-button">Register</button>
-                  </fieldset>
-              </div>
+            <div class="col-lg-6">
+              <fieldset>
+                <label for="FName" class="form-label">First Name<b>*</b>
+                </label>
+                <input type="text" name="FName" class="Name" placeholder="Ex.John" autocomplete="on" required>
+              </fieldset>
             </div>
-          </form>
-        </div>
+            <div class="col-lg-6">
+              <fieldset>
+                <label for="LName" class="form-label">Last Name<b>*</b>
+                </label>
+                <input type="text" name="LName" class="Name" placeholder="Ex. Capaldi" autocomplete="on" required>
+              </fieldset>
+            </div>
+            <div class="col-lg-6">
+              <fieldset>
+                <label for="DOB" class="form-label">Date of Birth<b>*</b></label>
+                <input type="date" name="DOB" class="date" required>
+              </fieldset>
+            </div>
+            <div class="col-lg-6">
+              <fieldset>
+                <label for="Phone" class="form-label">Phone Number<b>*</b></label>
+                <input type="text" name="Phone" class="Number" placeholder="Ex. +xxx xxx xxx" autocomplete="on"
+                  required>
+              </fieldset>
+            </div>
+            <div class="col-lg-6">
+              <fieldset>
+                <label for="email" class="form-label">Email ID<b>*</b></label>
+                <input type="email" name="email" class="email" placeholder="Ex. abcd@efgh.com" autocomplete="on"
+                  required>
+              </fieldset>
+            </div>
+            <div class="col-lg-6">
+              <fieldset>
+                <label for="Gender" class="form-label">Gender<b>*</b></label>
+                <select name="Gender" id="gender" class="form-select">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Non-binary">Non-binary</option>
+                </select>
+              </fieldset>
+            </div>
+            <div class="col-lg-12">
+              <fieldset>
+                <label for="medfile" class="form-label">
+                  Add Medical File
+                </label>
+                <input type="text" name="Medfile" id="medfile" required>
+              </fieldset>
+            </div>
+            <div class="col-lg-12">
+              <fieldset>
+                <label for="Username" class="form-label">Username<b>*</b></label>
+                <input type="text" name="Username" class="Name" placeholder="Enter username" autocomplete="on"
+                  style="display:'block';" required>
+              </fieldset>
+            </div>
+            <div class="col-lg-12">
+              <fieldset>
+                <label for="Password" class="form-label">Password<b>*</b< /label>
+                    <input type="password" name="Password" class="Name" placeholder="Enter your password"
+                      autocomplete="on" style="display: 'block';" required>
+              </fieldset>
+            </div>
+            <div class="col-lg-12">
+              <fieldset>
+                <label for="Confirm_password" class="form-label">Confirm Password<b>*</b></label>
+                <input type="password" name="Confirm_password" class="Name" placeholder="Confirm your password"
+                  autocomplete="on" style="display: 'block';" required>
+              </fieldset>
+            </div>
+            <div class="col-lg-12">
+              <fieldset>
+                <button class="main-button">Register</button>
+              </fieldset>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  {% endblock %}
+</div>
+{% endblock %}
 
 {% block footer %}
 <script>
-    $(".option").click(function () {
-        $(".option").removeClass("active");
-        $(this).addClass("active");
-    });
+  $(".option").click(function () {
+    $(".option").removeClass("active");
+    $(this).addClass("active");
+  });
 </script>
 {% endblock %}
