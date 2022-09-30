@@ -32,7 +32,28 @@
 
 <div class="category-form">
     <div class="form-container">
-        div.form-heading
+        <div class="col-lg-12">
+            <h1>How do you want to join <em>Psycura</em></h1>
+        </div>
+        <div class="col-lg-12">
+            <ul>
+                <li>
+                    <a href="{% url 'p_sign_up' %}">
+                        Patient
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'd_sign_up' %}">
+                        Doctor
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 's_sign_up' %}">
+                        Sponsor
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}

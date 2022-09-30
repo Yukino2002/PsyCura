@@ -27,4 +27,12 @@ def sign_in(request):
 def sign_up(request):
     return render(request, 'sign_up.html')
 
+def p_sign_up(request):
+    return render(request,'p_sign_up.html')
+
+def d_sign_up(request):
+    return render(request,'d_sign_up.html')
+
+def s_sign_up(request):
+    return render(request,'s_sign_up.html')
 

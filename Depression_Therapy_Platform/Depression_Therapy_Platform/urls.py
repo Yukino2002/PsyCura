@@ -11,5 +11,8 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('sign-in/', views.sign_in, name='sign_in'),
     path('sign-up/', views.sign_up, name='sign_up'),
+    path('p_sign_up/', views.p_sign_up, name="p_sign_up"),
+    path('d_sign_up/', views.d_sign_up, name="d_sign_up"),
+    path('s_sign_up/', views.s_sign_up, name="s_sign_up"),
     path('users/', include('Users.urls')),
 ]
