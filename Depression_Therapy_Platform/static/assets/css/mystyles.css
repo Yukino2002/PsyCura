@@ -79,7 +79,7 @@ input[type="file"]
     width: 250px;
     background: #22b3c1;
     margin-top: 46px;
-    position: absolute;
+    position: fixed;
     
 }
 
@@ -142,7 +142,15 @@ input[type="file"]
     border-radius: 23px;
 }
 
-.appointments-content
+.a-content input
+{
+    border-radius: 23px;
+    padding: 5px;
+    display: block;
+    width: 100%;
+}
+
+.patient-dash-content-container
 {
     margin-top: 70px;
     margin-left: 250px;
@@ -160,7 +168,7 @@ input[type="file"]
     border-radius: 23px;
 }
 
-#symptom-submit
+.a-submit
 {
     background: #22b3c1;
     color: white;
@@ -169,4 +177,9 @@ input[type="file"]
     width: 100%;
     padding: 10px;
     border-radius: 23px;
+}
+
+.a-row
+{
+    display: flex;
 }

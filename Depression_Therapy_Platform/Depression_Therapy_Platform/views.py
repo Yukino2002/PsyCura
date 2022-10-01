@@ -23,9 +23,11 @@ def sign_in(request):
         else:
             return render(request, 'patient_home.html')
 
-def p_appointments(request):
+def patient_appointments(request):
     return render(request,'patient_appointments.html')
         
+def patient_wallet(request):
+    return render(request,'patient_wallet.html')
 
 def sign_up(request):
     return render(request, 'sign_up.html')

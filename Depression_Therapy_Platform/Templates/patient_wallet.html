@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block navbar %}
-<li><a href="/" class="active">Home</a></li>
+<li><a href="#" class="active">Home</a></li>
 <li><a href="#">Doctors</a></li>
 <li><a href="#">Diagnosis</a></li>
 <li><a href="#">Q&As</a></li>
@@ -15,17 +15,17 @@
         <h2 style="color: white;">Patient</h2>
     </div>
     <div class="sidebar-contents">
-        <a href="#" class="sidebar-nav active">
+        <a href="{% url 'sign_in' %}" class="sidebar-nav">
             <p class="side-text">
                 Profile
             </p>
         </a>
-        <a href="{% url 'patient_appointments' %}" class="sidebar-nav">
+        <a href="{% url 'patient_appointments' %}"class="sidebar-nav">
             <p class="side-text">
                 Appointments
             </p>
         </a>
-        <a href="{% url 'patient_wallet' %}" class="sidebar-nav">
+        <a href="#" class="sidebar-nav active">
             <p class="side-text">
                 Wallet
             </p>
@@ -42,16 +42,36 @@
         </a>
     </div>
 </div>
-<div class="patient-dash-content-container">
-    <div class="a-content">
-        Name: Rohan Kamat<br>
-        Date Of Birth: 20-02-2002<br>
-        Gender: Male<br>
-        Phone number: 9620942560<br>
-        Email-id: rohankamat20022002@gmail.com<br>
-    </div>
-</div>
 
+<div class="patient-dash-content-container">
+    <div class="heading" style="margin: 10px;">
+        <h1>Wallet</h1>
+    </div>
+    <div class="a-content">
+        <h2>Current Balance</h2>
+        Balance here
+    </div>
+    <div class="a-content">
+        <h2>Statement</h2>
+        Statement here
+    </div>
+    <div class="a-row">
+        <div class="a-content" style="width: 50%;">
+            <h2>Add Money to wallet</h2>
+            <label for="amount-to-add" >Amount to add</label>
+            <input type="number" step="any" name="amount-to-add" placeholder="0.00">
+            <button class="a-submit">Add</button>
+        </div>
+        <div class="a-content" style="width: 50%;">
+            <h2>Withdraw money from the Wallet</h2>
+            <label for="amount-to-withdraw">Amount to Withdraw</label>
+            <input type="number" step="any" name="amount-to-withdraw" placeholder="0.00">
+            <button class="a-submit">Withdraw</button>
+        </div>
+    </div>
+
+
+</div>
 {% endblock %}
 
 {% block footer %}
@@ -64,5 +84,3 @@
     $
 </script>
 {% endblock %}
-
-

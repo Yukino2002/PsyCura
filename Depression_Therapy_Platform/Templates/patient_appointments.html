@@ -13,20 +13,20 @@
 <br>
 <div class="sidebar">
     <div class="heading" style="margin: 5px;">
-        <h2 style="color: white;">Patient Dashboard</h2>
+        <h2 style="color: white;">Patient</h2>
     </div>
     <div class="sidebar-contents">
-        <a class="sidebar-nav">
-            <p href="{% url 'sign_in' %}" class="side-text">
+        <a href="{% url 'sign_in' %}" class="sidebar-nav">
+            <p class="side-text">
                 Profile
             </p>
         </a>
-        <a class="sidebar-nav active">
+        <a href="#" class="sidebar-nav active">
             <p class="side-text">
                 Appointments
             </p>
         </a>
-        <a class="sidebar-nav">
+        <a href="{% url 'patient_wallet' %}" class="sidebar-nav">
             <p class="side-text">
                 Wallet
             </p>
@@ -44,14 +44,14 @@
     </div>
 </div>
 
-<div class="appointments-content">
+<div class="patient-dash-content-container">
     <div class="heading" style="margin: 10px;">
         <h1>Appointments</h1>
     </div>
     <div class="a-content">
         <label for="symptom-box"><h2>How are you feeling?</h2></label>
         <textarea name="symptom-box" id="symptoms" cols="30" rows="10" placeholder="Enter your symptoms"></textarea>
-        <button id="symptom-submit">Look for doctors</button>
+        <button class="a-submit">Look for doctors</button>
     </div>
     <div class="a-content">
         <h2>Past appointments</h2>
@@ -62,3 +62,13 @@
 
 {% endblock %}
 
+{% block footer %}
+<script>
+    $(".sidebar-nav").click(function () {
+        $(".sidebar-nav").removeClass("active");
+        $(this).addClass("active");
+    });
+
+    $
+</script>
+{% endblock %}
