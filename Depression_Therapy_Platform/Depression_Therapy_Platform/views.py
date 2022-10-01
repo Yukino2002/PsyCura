@@ -21,7 +21,10 @@ def sign_in(request):
         if request.user.is_authenticated:
             return redirect('Users:profile')
         else:
-            return render(request, 'sign_in.html')
+            return render(request, 'patient_home.html')
+
+def p_appointments(request):
+    return render(request,'patient_appointments.html')
         
 
 def sign_up(request):

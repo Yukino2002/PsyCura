@@ -73,3 +73,100 @@ input[type="file"]
     margin-top: 70px;
 }
 
+.sidebar
+{
+    height: 100%;
+    width: 250px;
+    background: #22b3c1;
+    margin-top: 46px;
+    position: absolute;
+    
+}
+
+
+.sidebar-nav
+{
+    padding: 15px;
+    margin: 5px;
+    background: #28ccdb;
+    display: block;
+}
+
+.sidebar-nav.active
+{
+    background: white;
+
+}
+
+.sidebar-nav.active p
+{
+    color: #22b3c1;
+}
+
+.sidebar-nav:hover
+{
+    opacity: 50%;
+    cursor: pointer;
+}
+
+
+
+.side-text{
+    color: white;
+}
+
+.side-text:hover
+{
+    color: white;
+}
+
+.profile
+{
+    margin-left: 250px;
+    padding: 250px;
+}
+
+.profile-contents
+{
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.a-content
+{
+    margin: 10px;
+    text-align: left;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 23px;
+}
+
+.appointments-content
+{
+    margin-top: 70px;
+    margin-left: 250px;
+    margin-right: 100px;
+    text-align: center;
+    padding-left: 100px;
+}
+
+#symptoms
+{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 23px;
+}
+
+#symptom-submit
+{
+    background: #22b3c1;
+    color: white;
+    border: 0px;
+    margin: 10px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 23px;
+}
