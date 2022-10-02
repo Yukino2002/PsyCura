@@ -39,7 +39,7 @@ def p_sign_up(request):
         if request.user.is_authenticated:
             return redirect('Users:profile')
         else:
-            return render(request, 'p_sign_up')
+            return render(request, 'p_sign_up.html')
 
     elif request.method == 'POST':
         user = get_user_model().objects.create_user(
