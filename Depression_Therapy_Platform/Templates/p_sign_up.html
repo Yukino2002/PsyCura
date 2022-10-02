@@ -4,7 +4,7 @@
 <li><a href="/">Home</a></li>
 <li><a href="{% url 'about' %}" class="active">About</a></li>
 <li><a href="{% url 'contact' %}">Contact Us</a></li>
-<li><a href="signup.html" id="sign-up">Sign-Up</a></li>
+<li><a href="{% url 'sign_up' %}" id="sign-up">Sign-Up</a></li>
 <li><a href="login.html" id="login">Login</a></li>
 {% endblock %}
 
@@ -14,35 +14,36 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <form id="reservation-form" name="gs" method="submit" role="search" action="#" method="POST">
+        <form id="reservation-form" method="POST" name="gs" role="search" action="{% url 'p_sign_up' %}">
+          {% csrf_token %}
           <div class="row">
             <div class="col-lg-12">
               <h4>Sign up to <em>PsyCura</em> through this <em>Form</em> </h4>
             </div>
             <div class="col-lg-6">
               <fieldset>
-                <label for="FName" class="form-label">First Name<b>*</b>
+                <label for="fname" class="form-label">First Name<b>*</b>
                 </label>
-                <input type="text" name="FName" class="Name" placeholder="Ex.John" autocomplete="on" required>
+                <input type="text" name="fname" class="name" placeholder="Ex.John" autocomplete="on" required>
               </fieldset>
             </div>
             <div class="col-lg-6">
               <fieldset>
-                <label for="LName" class="form-label">Last Name<b>*</b>
+                <label for="lname" class="form-label">Last Name<b>*</b>
                 </label>
-                <input type="text" name="LName" class="Name" placeholder="Ex. Capaldi" autocomplete="on" required>
+                <input type="text" name="lname" class="name" placeholder="Ex. Capaldi" autocomplete="on" required>
               </fieldset>
             </div>
             <div class="col-lg-6">
               <fieldset>
-                <label for="DOB" class="form-label">Date of Birth<b>*</b></label>
-                <input type="date" name="DOB" class="date" required>
+                <label for="age" class="form-label">Age<b>*</b></label>
+                <input type="number" name="age" class="number" required>
               </fieldset>
             </div>
             <div class="col-lg-6">
               <fieldset>
-                <label for="Phone" class="form-label">Phone Number<b>*</b></label>
-                <input type="text" name="Phone" class="Number" placeholder="Ex. +xxx xxx xxx" autocomplete="on"
+                <label for="phone" class="form-label">Phone Number<b>*</b></label>
+                <input type="text" name="phone" class="number" placeholder="Ex. +xxx xxx xxx" autocomplete="on"
                   required>
               </fieldset>
             </div>
@@ -55,8 +56,8 @@
             </div>
             <div class="col-lg-6">
               <fieldset>
-                <label for="Gender" class="form-label">Gender<b>*</b></label>
-                <select name="Gender" id="gender" class="form-select">
+                <label for="gender" class="form-label">Gender<b>*</b></label>
+                <select name="gender" id="gender" class="form-select">
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Non-binary">Non-binary</option>
@@ -66,35 +67,31 @@
             <div class="col-lg-12">
               <fieldset>
                 <label for="medfile" class="form-label">
-                  Add Medical File
+                  Add Medical File 
                 </label>
-                <input type="text" name="Medfile" id="medfile" required>
+                <fieldset>
+                  <input type="file" name="submit" id="submit" class="main-button" value="Upload file">
+                </fieldset>
               </fieldset>
             </div>
             <div class="col-lg-12">
               <fieldset>
-                <label for="Username" class="form-label">Username<b>*</b></label>
-                <input type="text" name="Username" class="Name" placeholder="Enter username" autocomplete="on"
-                  style="display:'block';" required>
+                <label for="password" class="form-label">Password<b>*</b></label>
+                <input type="password" name="password" id="password" class="name" placeholder="Enter your password"
+                  autocomplete="on" style="display: 'block';" onkeyup='check();' required>
               </fieldset>
             </div>
             <div class="col-lg-12">
               <fieldset>
-                <label for="Password" class="form-label">Password<b>*</b></label>
-                    <input type="password" name="Password" class="Name" placeholder="Enter your password"
-                      autocomplete="on" style="display: 'block';" required>
+                <label for="confirm_password" class="form-label">Confirm Password<b>*</b></label>
+                <input type="password" name="confirm_password" id="confirm_password" class="name"
+                  placeholder="Confirm your password" autocomplete="on" style="display: 'block';" onkeyup='check();'
+                  required>
               </fieldset>
             </div>
             <div class="col-lg-12">
               <fieldset>
-                <label for="Confirm_password" class="form-label">Confirm Password<b>*</b></label>
-                <input type="password" name="Confirm_password" class="Name" placeholder="Confirm your password"
-                  autocomplete="on" style="display: 'block';" required>
-              </fieldset>
-            </div>
-            <div class="col-lg-12">
-              <fieldset>
-                <button class="main-button">Register</button>
+                <input type="submit" name="submit" id="submit" class="main-button" value="Register">
               </fieldset>
             </div>
           </div>
@@ -104,6 +101,17 @@
   </div>
 </div>
 {% endblock %}
+
+<script>
+  var check = function () {
+    if (document.getElementById('password').value ==
+      document.getElementById('confirm_password').value) {
+      document.getElementById('password').style.backgroundColor = 'green';
+    } else {
+      document.getElementById('password').style.color = 'red';
+    }
+  }
+</script>
 
 <script>
   $(".option").click(function () {

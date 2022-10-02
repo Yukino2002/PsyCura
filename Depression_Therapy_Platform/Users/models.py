@@ -58,7 +58,7 @@ class Patient(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
     wallet_balance = models.PositiveIntegerField(default=0)
     past_diseases = models.CharField(max_length=1000,blank=True,null=True)
-    past_medication = models.CharField(max_length=1000,blank=True,null=True)
+    past_medication = models.FileField()
 
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, null=True, blank=True)
 
