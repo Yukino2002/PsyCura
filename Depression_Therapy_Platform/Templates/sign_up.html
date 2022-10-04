@@ -12,36 +12,41 @@
 {% endblock %}
 
 {% block main %}
-<div id="container">
-    <div class="product-image">
-        <a href="{% url 'p_sign_up' %}">
-            <img src="https://cdn-icons-png.flaticon.com/512/1430/1430504.png" alt="">
-        </a>
+<div>
+    <h1 style="position: relative; text-align: center; padding-top: 14%; font-family: 'Bebas Neue', cursive; word-spacing: 10px; letter-spacing: 4px;">
+        How are you looking to join us?
+    </h1>
+    <div id="container">
+        <div class="product-image">
+            <a href="{% url 'p_sign_up' %}">
+                <img src="https://cdn-icons-png.flaticon.com/512/1430/1430504.png" alt="">
+            </a>
+        </div>
+        <div class="product-details">
+            <h1>Patient</h1>
+        </div>
     </div>
-    <div class="product-details">
-        <h1>Patient</h1>
-    </div>
-</div>
 
-<div id="container">
-    <div class="product-image">
-        <a href="{% url 'p_sign_up' %}">
-            <img src="https://cdn-icons-png.flaticon.com/512/709/709043.png" alt="">
-        </a>
+    <div id="container">
+        <div class="product-image">
+            <a href="{% url 'p_sign_up' %}">
+                <img src="https://cdn-icons-png.flaticon.com/512/709/709043.png" alt="">
+            </a>
+        </div>
+        <div class="product-details">
+            <h1>Doctor</h1>
+        </div>
     </div>
-    <div class="product-details">
-        <h1>Doctor</h1>
-    </div>
-</div>
 
-<div id="container">
-    <div class="product-image">
-        <a href="{% url 'p_sign_up' %}">
-            <img src="https://cdn-icons-png.flaticon.com/512/8520/8520012.png" alt="">
-        </a>
-    </div>
-    <div class="product-details">
-        <h1>Sponsor</h1>
+    <div id="container">
+        <div class="product-image">
+            <a href="{% url 'p_sign_up' %}">
+                <img src="https://cdn-icons-png.flaticon.com/512/8520/8520012.png" alt="">
+            </a>
+        </div>
+        <div class="product-details">
+            <h1>Sponsor</h1>
+        </div>
     </div>
 </div>
 {% endblock %}

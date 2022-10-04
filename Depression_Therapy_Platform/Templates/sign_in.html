@@ -2,10 +2,10 @@
 
 {% block navbar %}
 <li><a href="/">Home</a></li>
-<li><a href="{% url 'about' %}" class="active">About</a></li>
+<li><a href="{% url 'about' %}">About</a></li>
 <li><a href="{% url 'contact' %}">Contact Us</a></li>
-<li><a href="signup.html" id="sign-up">Sign-Up</a></li>
-<li><a href="login.html" id="login">Login</a></li>
+<li><a href="{% url 'sign_up' %}" id="sign-up">Sign-Up</a></li>
+<li><a href="login.html" id="login" class="active">Login</a></li>
 {% endblock %}
 
 {% block main %}
@@ -20,58 +20,11 @@
             <div class="col-lg-12">
               <h4>Sign up to <em>PsyCura</em> through this <em>Form</em> </h4>
             </div>
-            <div class="col-lg-6">
-              <fieldset>
-                <label for="fname" class="form-label">First Name<b>*</b>
-                </label>
-                <input type="text" name="fname" class="name" placeholder="Ex.John" autocomplete="on" required>
-              </fieldset>
-            </div>
-            <div class="col-lg-6">
-              <fieldset>
-                <label for="lname" class="form-label">Last Name<b>*</b>
-                </label>
-                <input type="text" name="lname" class="name" placeholder="Ex. Capaldi" autocomplete="on" required>
-              </fieldset>
-            </div>
-            <div class="col-lg-6">
-              <fieldset>
-                <label for="age" class="form-label">Age<b>*</b></label>
-                <input type="number" name="age" class="number" required>
-              </fieldset>
-            </div>
-            <div class="col-lg-6">
-              <fieldset>
-                <label for="phone" class="form-label">Phone Number<b>*</b></label>
-                <input type="text" name="phone" class="number" placeholder="Ex. +xxx xxx xxx" autocomplete="on"
-                  required>
-              </fieldset>
-            </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <fieldset>
                 <label for="email" class="form-label">Email ID<b>*</b></label>
                 <input type="email" name="email" class="email" placeholder="Ex. abcd@efgh.com" autocomplete="on"
                   required>
-              </fieldset>
-            </div>
-            <div class="col-lg-6">
-              <fieldset>
-                <label for="gender" class="form-label">Gender<b>*</b></label>
-                <select name="gender" id="gender" class="form-select">
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Non-binary">Non-binary</option>
-                </select>
-              </fieldset>
-            </div>
-            <div class="col-lg-12">
-              <fieldset>
-                <label for="medfile" class="form-label">
-                  Add Medical File 
-                </label>
-                <fieldset>
-                  <input type="file" name="submit" id="submit" class="main-button" value="Upload file">
-                </fieldset>
               </fieldset>
             </div>
             <div class="col-lg-12">
@@ -79,14 +32,6 @@
                 <label for="password" class="form-label">Password<b>*</b></label>
                 <input type="password" name="password" id="password" class="name" placeholder="Enter your password"
                   autocomplete="on" style="display: 'block';" onkeyup='check();' required>
-              </fieldset>
-            </div>
-            <div class="col-lg-12">
-              <fieldset>
-                <label for="confirm_password" class="form-label">Confirm Password<b>*</b></label>
-                <input type="password" name="confirm_password" id="confirm_password" class="name"
-                  placeholder="Confirm your password" autocomplete="on" style="display: 'block';" onkeyup='check();'
-                  required>
               </fieldset>
             </div>
             <div class="col-lg-12">
