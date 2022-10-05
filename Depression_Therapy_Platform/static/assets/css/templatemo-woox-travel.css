@@ -1,10 +1,4 @@
-/*
-
-TemplateMo 580 Woox Travel
-
-https://templatemo.com/tm-580-woox-travel
-
-*/
+{% load static %}
 /* ---------------------------------------------
 Table of contents
 ------------------------------------------------
@@ -818,7 +812,7 @@ Banner Style
   transition: 0.3s;
 }
 #section-1 .content-slider .slider #top-banner-1 {
-  background: url('../images/banner-01.jpg') no-repeat center center;
+  background: url('../images/homepage/banner-1.jpeg') no-repeat center center;
   background-size: cover;
 }
 #section-1 .content-slider .slider #top-banner-2 {
