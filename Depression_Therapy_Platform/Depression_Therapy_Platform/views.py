@@ -57,7 +57,7 @@ def sign_up(request):
 @unauthenticated_user
 def p_sign_up(request):
     if request.method == 'GET':
-        return render(request, 'p_sign_up.html')
+        return render(request, 'p_form.html')
 
     elif request.method == 'POST':
         user = get_user_model().objects.create_user(
