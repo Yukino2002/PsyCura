@@ -1,3 +1,4 @@
+from cmath import log
 import sys
 sys.path.append('..')
 from Users import models
@@ -24,9 +25,6 @@ def contact(request):
 
 @unauthenticated_user
 def sign_in(request):
-    if request.method == 'GET':
-        return render(request, 'authentication/sign_in.html')
-
     if request.method == 'POST':
         user = authenticate(
             email=request.POST.get('email'),
@@ -34,19 +32,34 @@ def sign_in(request):
         )
 
         if user is not None:
-            login(request, user)
-            group = request.user.groups.all()[0].name
+            group = user.groups.all()[0].name
             
             if group == 'patient':
+                login(request, user)
                 return redirect('Users:p_home')
+
             elif group == 'doctor':
+                doctor = models.Doctor.objects.get(user=user)
+                if not doctor.is_approved:
+                    return redirect('sign_in')
+
+                login(request, user)
                 return redirect('Users:d_home')
+
             elif group == 'sponsor':
+                sponsor = models.Sponsor.objects.get(user=user)
+                if not sponsor.is_approved:
+                    return redirect('sign_in')
+
+                login(request, user)
                 return redirect('Users:s_home')
             else:
+                login(request, user)
                 return redirect('Users:home')
         else:
             return render(request, 'authentication/sign_in.html')
+
+    return render(request, 'authentication/sign_in.html')
 
 
 @unauthenticated_user
@@ -56,54 +69,65 @@ def sign_up(request):
 
 def create_user(request):
     user = get_user_model().objects.create_user(
-            first_name=request.POST.get('fname'),
-            last_name=request.POST.get('lname'),
-            age=request.POST.get('age'),
-            email=request.POST.get('email'),
-            phone_number=request.POST.get('phone'),
-            gender=request.POST.get('gender'),
-            password=request.POST.get('password')
-        )
+        first_name=request.POST.get('fname'),
+        last_name=request.POST.get('lname'),
+        age=request.POST.get('age'),
+        email=request.POST.get('email'),
+        phone_number=request.POST.get('phone'),
+        gender=request.POST.get('gender'),
+        password=request.POST.get('password')
+    )
 
     return user
 
 
 @unauthenticated_user
 def p_sign_up(request):
-    if request.method == 'GET':
-        return render(request, 'authentication/forms/p_form.html')
-
-    elif request.method == 'POST':
+    if request.method == 'POST':
         user = create_user(request)
-
         user.groups.add(Group.objects.get(name='patient'))
 
         patient = models.Patient.objects.create(
             user=user,
-            past_medication=request.POST.get('medfile')
+            qualifications=request.POST.get('past_diseases'), 
+            certificate=request.POST.get('past_medication')
         )
 
         return redirect('sign_in')
+
+    return render(request, 'authentication/forms/p_form.html')
 
 
 @unauthenticated_user
 def d_sign_up(request):
-    if request.method == 'GET':
-        return render(request, 'authentication/forms/d_form.html')
-
-    elif request.method == 'POST':
+    if request.method == 'POST':
         user = create_user(request)
-
         user.groups.add(Group.objects.get(name='doctor'))
 
-        patient = models.Patient.objects.create(
+        patient = models.Doctor.objects.create(
             user=user,
-            past_medication=request.POST.get('medfile')
+            qualifications=request.POST.get('qualifications'), 
+            certificate=request.POST.get('certficate')
         )
 
         return redirect('sign_in')
 
+    return render(request, 'authentication/forms/d_form.html')
+
 
 @unauthenticated_user
 def s_sign_up(request):
+    if request.method == 'POST':
+        user = create_user(request)
+        user.groups.add(Group.objects.get(name='sponsor'))
+
+        sponsor = models.Sponsor.objects.create(
+            user=user, 
+            qualifications=request.POST.get('qualifications'), 
+            organisation_name=request.POST.get('organisation_name'), 
+            certificate=request.POST.get('certificate')
+        )
+
+        return redirect('sign_in')
+    
     return render(request, 'authentication/forms/s_form.html')
