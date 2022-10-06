@@ -11,21 +11,21 @@ sys.path.append('..')
 
 
 def homepage(request):
-    return render(request, 'homepage.html')
+    return render(request, 'homepage/homepage.html')
 
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'homepage/about.html')
 
 
 def contact(request):
-    return render(request, 'contact.html')
+    return render(request, 'homepage/contact.html')
 
 
 @unauthenticated_user
 def sign_in(request):
     if request.method == 'GET':
-        return render(request, 'sign_in.html')
+        return render(request, 'authentication/sign_in.html')
 
     if request.method == 'POST':
         user = authenticate(
@@ -46,18 +46,18 @@ def sign_in(request):
             else:
                 return redirect('Users:home')
         else:
-            return render(request, 'sign_in.html')
+            return render(request, 'authentication/sign_in.html')
 
 
 @unauthenticated_user
 def sign_up(request):
-    return render(request, 'sign_up.html')
+    return render(request, 'authentication/sign_up.html')
 
 
 @unauthenticated_user
 def p_sign_up(request):
     if request.method == 'GET':
-        return render(request, 'p_form.html')
+        return render(request, 'authentication/forms/patient/form.html')
 
     elif request.method == 'POST':
         user = get_user_model().objects.create_user(
@@ -82,10 +82,10 @@ def p_sign_up(request):
 
 @unauthenticated_user
 def d_sign_up(request):
-    return render(request, 'd_sign_up.html')
+    return render(request, 'authentication/forms/doctor/form.html')
 
 
 @unauthenticated_user
 def s_sign_up(request):
-    return render(request, 's_sign_up.html')
+    return render(request, 'authentication/forms/doctor/form.html')
 
