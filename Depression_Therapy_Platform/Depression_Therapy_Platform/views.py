@@ -32,30 +32,33 @@ def sign_in(request):
         )
 
         if user is not None:
-            group = user.groups.all()[0].name
-            
-            if group == 'patient':
-                login(request, user)
-                return redirect('Users:p_home')
+            if user.groups.exists():
+                group = user.groups.all()[0].name
 
-            elif group == 'doctor':
-                doctor = models.Doctor.objects.get(user=user)
-                if not doctor.is_approved:
-                    return redirect('sign_in')
+                if group == 'patient':
+                    login(request, user)
+                    return redirect('Users:p_home')
 
-                login(request, user)
-                return redirect('Users:d_home')
+                elif group == 'doctor':
+                    doctor = models.Doctor.objects.get(user=user)
+                    if not doctor.is_approved:
+                        return redirect('sign_in')
 
-            elif group == 'sponsor':
-                sponsor = models.Sponsor.objects.get(user=user)
-                if not sponsor.is_approved:
-                    return redirect('sign_in')
+                    login(request, user)
+                    return redirect('Users:d_home')
 
-                login(request, user)
-                return redirect('Users:s_home')
-            else:
+                elif group == 'sponsor':
+                    sponsor = models.Sponsor.objects.get(user=user)
+                    if not sponsor.is_approved:
+                        return redirect('sign_in')
+
+                    login(request, user)
+                    return redirect('Users:s_home')
+
+            elif user.is_superuser:
                 login(request, user)
                 return redirect('Users:home')
+            
         else:
             return render(request, 'authentication/sign_in.html')
 
@@ -67,7 +70,7 @@ def sign_up(request):
     return render(request, 'authentication/sign_up.html')
 
 
-def create_user(request):
+def create_user(request, group):
     user = get_user_model().objects.create_user(
         first_name=request.POST.get('fname'),
         last_name=request.POST.get('lname'),
@@ -78,14 +81,15 @@ def create_user(request):
         password=request.POST.get('password')
     )
 
+    user.groups.add(group)
+
     return user
 
 
 @unauthenticated_user
 def p_sign_up(request):
     if request.method == 'POST':
-        user = create_user(request)
-        user.groups.add(Group.objects.get(name='patient'))
+        user = create_user(request, Group.objects.get(name='patient'))
 
         patient = models.Patient.objects.create(
             user=user,
@@ -101,8 +105,7 @@ def p_sign_up(request):
 @unauthenticated_user
 def d_sign_up(request):
     if request.method == 'POST':
-        user = create_user(request)
-        user.groups.add(Group.objects.get(name='doctor'))
+        user = create_user(request, Group.objects.get(name='doctor'))
 
         patient = models.Doctor.objects.create(
             user=user,
@@ -118,8 +121,7 @@ def d_sign_up(request):
 @unauthenticated_user
 def s_sign_up(request):
     if request.method == 'POST':
-        user = create_user(request)
-        user.groups.add(Group.objects.get(name='sponsor'))
+        user = create_user(request, Group.objects.get(name='sponsor'))
 
         sponsor = models.Sponsor.objects.create(
             user=user, 
