@@ -70,6 +70,7 @@ class Doctor(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
     wallet_balance = models.PositiveIntegerField(default=0)
     qualifications = models.CharField(max_length=1000,blank=True,null=True)
+    certificate = models.FileField()
     approved = models.BooleanField(default=False)
 
     def __str__(self):
@@ -79,7 +80,8 @@ class Doctor(models.Model):
 class Sponsor(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
     qualifications = models.CharField(max_length=1000,blank=True,null=True)
-    organization_name = models.CharField(max_length=100,blank=True,null=True)
+    organisation_name = models.CharField(max_length=100,blank=True,null=True)
+    certificate = models.FileField()
     approved = models.BooleanField(default=False)
 
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, null=True, blank=True)

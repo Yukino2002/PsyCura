@@ -1,13 +1,13 @@
-from .decorators import unauthenticated_user
-from Users import models
-from django.shortcuts import render
-from django.contrib.auth import get_user_model
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
-from django.contrib.auth.models import Group
 import sys
 sys.path.append('..')
+from Users import models
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.contrib.auth.models import Group
+from .decorators import unauthenticated_user
+from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, login, logout
 
 
 def homepage(request):
@@ -54,13 +54,8 @@ def sign_up(request):
     return render(request, 'authentication/sign_up.html')
 
 
-@unauthenticated_user
-def p_sign_up(request):
-    if request.method == 'GET':
-        return render(request, 'authentication/forms/patient/form.html')
-
-    elif request.method == 'POST':
-        user = get_user_model().objects.create_user(
+def create_user(request):
+    user = get_user_model().objects.create_user(
             first_name=request.POST.get('fname'),
             last_name=request.POST.get('lname'),
             age=request.POST.get('age'),
@@ -69,6 +64,17 @@ def p_sign_up(request):
             gender=request.POST.get('gender'),
             password=request.POST.get('password')
         )
+
+    return user
+
+
+@unauthenticated_user
+def p_sign_up(request):
+    if request.method == 'GET':
+        return render(request, 'authentication/forms/p_form.html')
+
+    elif request.method == 'POST':
+        user = create_user(request)
 
         user.groups.add(Group.objects.get(name='patient'))
 
@@ -82,10 +88,22 @@ def p_sign_up(request):
 
 @unauthenticated_user
 def d_sign_up(request):
-    return render(request, 'authentication/forms/doctor/form.html')
+    if request.method == 'GET':
+        return render(request, 'authentication/forms/d_form.html')
+
+    elif request.method == 'POST':
+        user = create_user(request)
+
+        user.groups.add(Group.objects.get(name='doctor'))
+
+        patient = models.Patient.objects.create(
+            user=user,
+            past_medication=request.POST.get('medfile')
+        )
+
+        return redirect('sign_in')
 
 
 @unauthenticated_user
 def s_sign_up(request):
-    return render(request, 'authentication/forms/doctor/form.html')
-
+    return render(request, 'authentication/forms/s_form.html')
