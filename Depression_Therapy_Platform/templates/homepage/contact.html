@@ -1,14 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block navbar %}
-<li><a href="/">Home</a></li>
-<li><a href="{% url 'about' %}">About</a></li>
-<li><a href="{% url 'contact' %}" class="active">Contact Us</a></li>
-<li><a href="{% url 'sign_up' %}" id="sign-up">Sign-Up</a></li>
-<li><a href="{% url 'sign_in' %}" id="login">Login</a></li>
-{% endblock %}
-
 {% block main %}
 <div class="more-info reservation-info" style="padding-top: 20%;">
     <div class="container">

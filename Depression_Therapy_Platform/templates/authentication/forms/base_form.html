@@ -1,13 +1,5 @@
 {% extends 'base.html' %}
 
-{% block navbar %}
-<li><a href="/">Home</a></li>
-<li><a href="{% url 'about' %}">About</a></li>
-<li><a href="{% url 'contact' %}">Contact Us</a></li>
-<li><a href="{% url 'sign_up' %}" id="sign-up" class="active">Sign-Up</a></li>
-<li><a href="{% url 'sign_in' %}" id="login">Login</a></li>
-{% endblock %}
-
 {% block main %}
 <br>
 <div class="reservation-form">

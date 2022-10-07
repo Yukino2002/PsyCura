@@ -29,28 +29,41 @@ def s_home(request):
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def home(request):
-    return render(request, 'Users/staff/profile.html', {'staff':request.user})
+    return render(request, 'Users/staff/profile/profile.html', {'staff':request.user})
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def doctors_pending(request):
     doctors = Doctor.objects.all().filter(is_approved='P')
-    return render(request, 'Users/staff/d_pending.html', {'staff':request.user, 'doctors':doctors})
+    return render(request, 'Users/staff/doctors/d_list.html', {'staff':request.user, 'doctors':doctors})
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def doctors_approved(request):
     doctors = Doctor.objects.all().filter(is_approved='A')
-    return render(request, 'Users/staff/d_approved.html', {'staff':request.user, 'doctors':doctors})
+    return render(request, 'Users/staff/doctors/d_list.html', {'staff':request.user, 'doctors':doctors})
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def doctors_banned(request):
     doctors = Doctor.objects.all().filter(is_approved='B')
-    return render(request, 'Users/staff/d_banned.html', {'staff':request.user, 'doctors':doctors})
+    return render(request, 'Users/staff/doctors/d_list.html', {'staff':request.user, 'doctors':doctors})
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['admin', 'staff'])
+def doctor_update(request, d_id):
+    doctor = Doctor.objects.get(pk=d_id)
+
+    if request.method == 'POST':
+        doctor.is_approved = request.POST.get('is_approved')
+        doctor.save()
+        return redirect('Users:doctors_pending')
+
+    return render(request, 'Users/staff/doctors/d_update.html', {'staff':request.user, 'doctor':doctor})
 
 
 @login_required(login_url='sign_in')
