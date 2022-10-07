@@ -1,37 +1,23 @@
-{% extends 'Users/base.html' %}
+{% extends 'Users/staff/staff_base.html' %}
+{% load static %}
 
-{% block sidebar %}
-<ul class="nav-links">
-    <li class="pb-16">
-        <span class="pl-6 text-white text-2xl">User Name</span>
-        <br>
-        <span class="pl-6 text-yellow-200">Patient</span>
-    </li>
-    <li>
-        <a href="" class="active">
-            <i class='bx bx-grid-alt'></i>
-            <span class="links_name">Profile</span>
-        </a>
-    </li>
-    <li>
-        <a href="">
-            <i class='bx bx-book-add'></i>
-            <span class="links_name">Doctors</span>
-        </a>
-    </li>
-    <li class="log_out">
-        <a href="">
-            <i class='bx bx-log-out'></i>
-            <span class="links_name">Log out</span>
-        </a>
-    </li>
-</ul>
+{% block sidebar_items %}
+<li>
+    <a href="{% url 'Users:home' %}" class="active">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Profile</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:doctors_pending' %}">
+        <i class='bx bx-book-add'></i>
+        <span class="links_name">Doctors</span>
+    </a>
+</li>
 {% endblock %}
 
 {% block home_section %}
-<div class="home-content">
-    <div>
-        <style>
+<!-- <style>
             html {
                 line-height: 1.15;
                 -webkit-text-size-adjust: 100%;
@@ -249,10 +235,5 @@
                     <button class="card__action__button card__action--message">message</button>
                 </div>
             </div>
-        </main>
-
-
-
-    </div>
-</div>
+        </main> -->
 {% endblock %}

@@ -18,7 +18,8 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-lg-12">
-                            <h4>Sign up to <em>PsyCura</em> through this <em>Form</em> </h4>
+                            {% block heading %}
+                            {% endblock %}
                         </div>
                         <div class="col-lg-6">
                             <fieldset>
@@ -86,7 +87,8 @@
                         </div>
                         <div class="col-lg-12">
                             <fieldset>
-                                <input type="submit" name="submit" id="submit" class="main-button" value="Register">
+                                <input type="submit" name="submit" id="submit" class="main-button" value="Register"
+                                    style="background-color: #22b3c1; color: white;">
                             </fieldset>
                         </div>
                     </div>

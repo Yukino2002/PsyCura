@@ -8,6 +8,8 @@ def allowed_users(allowed_users=[]):
             group = None
             if request.user.groups.exists():
                 group = request.user.groups.all()[0].name
+            elif request.user.is_superuser:
+                group = 'staff'
 
             if group in allowed_users:
                 return view_func(request, *args, **kwargs)

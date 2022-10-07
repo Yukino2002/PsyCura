@@ -1,0 +1,23 @@
+{% extends 'Users/staff/staff_base.html' %}
+{% load static %}
+
+{% block sidebar_items %}
+<li>
+    <a href="{% url 'Users:doctors_pending' %}">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Pending</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:doctors_approved' %}">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Approved</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:doctors_banned' %}" class="active">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Banned</span>
+    </a>
+</li>
+{% endblock %}

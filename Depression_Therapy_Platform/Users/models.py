@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 import sys
 sys.path.append("..")
@@ -70,7 +71,8 @@ class Doctor(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
     wallet_balance = models.PositiveIntegerField(default=0)
     qualifications = models.CharField(max_length=1000,blank=True,null=True)
-    approved = models.BooleanField(default=False)
+    certificate = models.FileField()
+    is_approved = models.CharField(max_length=10,choices=(('A', 'Approved'), ('P', 'Pending'), ('B', 'Banned')),default='P')
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name
@@ -79,8 +81,9 @@ class Doctor(models.Model):
 class Sponsor(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
     qualifications = models.CharField(max_length=1000,blank=True,null=True)
-    organization_name = models.CharField(max_length=100,blank=True,null=True)
-    approved = models.BooleanField(default=False)
+    organisation_name = models.CharField(max_length=100,blank=True,null=True)
+    certificate = models.FileField()
+    is_approved = models.CharField(max_length=10,choices=(('A', 'Approved'), ('P', 'Pending'), ('B', 'Banned')),default='P')
 
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, null=True, blank=True)
 
