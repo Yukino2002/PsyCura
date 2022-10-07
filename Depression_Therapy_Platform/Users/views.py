@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.contrib.auth import get_user_model
-from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
 from .decorators import allowed_users
+from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['patient'])
@@ -26,4 +28,29 @@ def s_home(request):
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def home(request):
-    return render(request, 'Users/staff/home.html')
+    return render(request, 'Users/staff/profile.html')
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['admin', 'staff'])
+def doctors_pending(request):
+    return render(request, 'Users/staff/d_pending.html')
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['admin', 'staff'])
+def doctors_pending(request):
+    return render(request, 'Users/staff/d_pending.html')
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['admin', 'staff'])
+def doctors_pending(request):
+    return render(request, 'Users/staff/d_pending.html')
+    
+
+
+@login_required(login_url='sign_in')
+def sign_out(request):
+    logout(request)
+    return redirect('sign_in')
