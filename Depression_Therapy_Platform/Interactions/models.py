@@ -27,3 +27,9 @@ class Transaction(models.Model):
 
     def __str__(self):
         return str(self.date) + ' ' + str(self.time) + ' ' + str(self.amount) + ' ' + str(self.patient.user.first_name) + ' ' + str(self.doctor.user.first_name)
+    
+    def transfer(self):
+        self.patient.wallet_balance -= self.amount
+        self.doctor.wallet_balance += self.amount
+
+        

@@ -70,7 +70,7 @@ def p_sign_up(request):
             password=request.POST.get('password')
         )
 
-        user.groups.add(Group.objects.get(name='patient'))
+        user.groups.add(Group.objects.get_or_create(name='patient')[0])
 
         patient = models.Patient.objects.create(
             user=user,

@@ -15,7 +15,7 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError('Users must have an email address')
         if not password:
-            raise ValueError('Users must have an password address')
+            raise ValueError('Users must have a password address')
         email = self.normalize_email(email)
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
