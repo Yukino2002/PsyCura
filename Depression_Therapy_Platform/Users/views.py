@@ -29,7 +29,7 @@ def s_home(request):
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def home(request):
-    return render(request, 'Users/staff/profile.html', {'staff':request.user})
+    return render(request, 'Users/staff/profile/profile.html', {'staff':request.user})
 
 
 @login_required(login_url='sign_in')
