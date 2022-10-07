@@ -1,3 +1,4 @@
+from .models import *
 from django.shortcuts import render
 from django.http import HttpResponse
 from .decorators import allowed_users
@@ -34,19 +35,22 @@ def home(request):
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def doctors_pending(request):
-    return render(request, 'Users/staff/d_pending.html', {'staff':request.user})
+    doctors = Doctor.objects.all().filter(is_approved='P')
+    return render(request, 'Users/staff/d_pending.html', {'staff':request.user, 'doctors':doctors})
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def doctors_approved(request):
-    return render(request, 'Users/staff/d_approved.html', {'staff':request.user})
+    doctors = Doctor.objects.all().filter(is_approved='A')
+    return render(request, 'Users/staff/d_approved.html', {'staff':request.user, 'doctors':doctors})
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def doctors_banned(request):
-    return render(request, 'Users/staff/d_banned.html', {'staff':request.user})
+    doctors = Doctor.objects.all().filter(is_approved='B')
+    return render(request, 'Users/staff/d_banned.html', {'staff':request.user, 'doctors':doctors})
 
 
 @login_required(login_url='sign_in')
