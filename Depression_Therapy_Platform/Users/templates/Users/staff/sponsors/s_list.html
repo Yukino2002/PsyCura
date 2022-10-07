@@ -1,0 +1,60 @@
+{% extends 'Users/staff/staff_base.html' %}
+{% load static %}
+
+{% block sidebar_items %}
+<li>
+    <a href="{% url 'Users:sponsors_pending' %}" id="pending">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Pending</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:sponsors_approved' %}" id="approved">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Approved</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:sponsors_banned' %}" id="banned">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Banned</span>
+    </a>
+</li>
+{% endblock %}
+
+{% block home_section %}
+{% for doctor in doctors %}
+<a href="{% url 'Users:sponsor_update' sponsor.pk %}">
+    <div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
+        style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
+
+        <div class="flex flex-col items-start w-full m-auto sm:flex-row">
+            <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
+                <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
+                    <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
+                        {{sponsor.user.first_name}} {{sponsor.user.last_name}}</h1>
+                </div>
+                <div class="items-center justify-between mt-4 ">
+                    <div class="flex"><span class="mr-1 font-semibold">{{sponsor.organisation_name}}</span></div>
+                    <div class="flex"><span class="mr-1 font-semibold">{{sponsor.user.email}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+{% endfor %}
+<br><br><br>
+
+<script>
+    var url = window.location.href;
+    var url = url.substring(url.lastIndexOf('/') + 1);
+
+    if (url == "d-pending") {
+        document.getElementById("pending").classList.add("active");
+    } else if (url == "d-approved") {
+        document.getElementById("approved").classList.add("active");
+    } else if (url == "d-banned") {
+        document.getElementById("banned").classList.add("active");
+    }
+</script>
+{% endblock %}
