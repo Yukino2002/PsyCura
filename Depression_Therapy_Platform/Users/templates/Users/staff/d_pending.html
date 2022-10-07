@@ -1,42 +1,26 @@
-{% extends 'Users/base.html' %}
+{% extends 'Users/staff/staff_base.html' %}
+{% load static %}
 
-{% block sidebar %}
-<ul class="nav-links">
-    <li class="pb-16">
-        <span class="pl-6 text-white text-2xl">User Name</span>
-        <br>
-    </li>
-    <li>
-        <a href="{% url 'Users:doctors_pending' %}" class="active">
-            <i class='bx bx-grid-alt'></i>
-            <span class="links_name">Pending</span>
-        </a>
-    </li>
-    <li>
-        <a href="{% url 'Users:doctors_pending' %}">
-            <i class='bx bx-grid-alt'></i>
-            <span class="links_name">Approved</span>
-        </a>
-    </li>
-    <li>
-        <a href="{% url 'Users:doctors_pending' %}">
-            <i class='bx bx-grid-alt'></i>
-            <span class="links_name">Banned</span>
-        </a>
-    </li>
-    <li class="log_out">
-        <a href="{% url 'Users:sign_out' %}">
-            <i class='bx bx-log-out'></i>
-            <span class="links_name">Log out</span>
-        </a>
-    </li>
-</ul>
+{% block sidebar_items %}
+<li>
+    <a href="{% url 'Users:doctors_pending' %}" class="active">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Pending</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:doctors_approved' %}">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Approved</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:doctors_banned' %}">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Banned</span>
+    </a>
+</li>
 {% endblock %}
 
 {% block home_section %}
-<div class="home-content">
-    <div>
-
-    </div>
-</div>
 {% endblock %}

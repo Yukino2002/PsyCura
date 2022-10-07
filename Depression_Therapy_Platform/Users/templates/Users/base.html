@@ -12,10 +12,6 @@
 
 <body>
     <div class="sidebar">
-        <div class="logo-details">
-            <i class='bx bx-plus-medical'></i>
-            <span class="logo_name">PsyCura</span>
-        </div>
         {% block sidebar %}
         {% endblock %}
     </div>
@@ -27,8 +23,10 @@
                 <span class="dashboard">Profile</span>
             </div>
         </nav>
-        {% block home_section %}
-        {% endblock %}
+        <div class="home-content">
+            {% block home_section %}
+            {% endblock %}
+        </div>
     </section>
 
     <script>

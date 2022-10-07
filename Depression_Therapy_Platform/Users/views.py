@@ -39,15 +39,14 @@ def doctors_pending(request):
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
-def doctors_pending(request):
-    return render(request, 'Users/staff/d_pending.html')
+def doctors_approved(request):
+    return render(request, 'Users/staff/d_approved.html')
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
-def doctors_pending(request):
-    return render(request, 'Users/staff/d_pending.html')
-    
+def doctors_banned(request):
+    return render(request, 'Users/staff/d_banned.html')
 
 
 @login_required(login_url='sign_in')
