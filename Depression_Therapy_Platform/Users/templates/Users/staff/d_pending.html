@@ -24,25 +24,24 @@
 
 {% block home_section %}
 {% for doctor in doctors %}
-<div class="max-w-screen-md py-8 px-10 bg-white rounded-lg shadow border-1"
-    style="position: relative; display: inline-block; width: 20%; margin-left: 10%; margin-top: 100px;">
+<div class="pt-6 pb-12 px-11 bg-white rounded-lg shadow border-1"
+    style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
     <div class="flex flex-col items-start w-full m-auto sm:flex-row">
         <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
             <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
-                <h2 class="flex pr-4 text-xl font-light text-gray-900 sm:text-3xl"></h2>
+                <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">{{doctor.user.first_name}} {{doctor.user.last_name}}</h1>
             </div>
-            <div class="items-center justify-between mt-3 ">
-                <div class="flex"><span class="mr-1 font-semibold">{{doctor.first_name}}</span>
-                </div>
-                <div class="flex"><span class="mr-1 font-semibold">{{doctor.first_name}}</span>
-                </div>
+            <div class="items-center justify-between mt-4 ">
+                <div class="flex"><span class="mr-1 font-semibold">{{doctor.qualifications}}</span></div>
+                <div class="flex"><span class="mr-1 font-semibold">{{doctor.user.email}}</span></div>
             </div>
         </div>
     </div>
-    <div class="w-full pt-5">
-        <h1 class="text-lg font-semibold text-gray-800 sm:text-xl"></h1>
-        <p class="text-sm text-gray-500 md:text-base">{{doctor.first_name}}</p>
-        <p class="text-sm text-gray-800 md:text-base"></p>
+    <div class="w-full pt-4">
+        <p class="text-lg text-gray-800 md:text-base">Age: {{doctor.user.age}}</p>
+        <!-- <p class="text-lg text-gray-800 md:text-base">Gender: {{doctor.user.gender}}</p> -->
+        <p class="text-lg text-gray-800 md:text-base">Phone Number: {{doctor.user.phone_number}}</p>
+        <!-- <p class="text-lg text-gray-800 md:text-base">Address: ABC, Tarun Nagar</p> -->
     </div>
 </div>
 {% endfor %}
