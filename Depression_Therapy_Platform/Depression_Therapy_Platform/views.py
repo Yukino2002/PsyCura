@@ -41,19 +41,19 @@ def sign_in(request):
 
                 elif group == 'doctor':
                     doctor = models.Doctor.objects.get(user=user)
-                    if not doctor.is_approved:
-                        return redirect('sign_in')
-
-                    login(request, user)
-                    return redirect('Users:d_home')
+                    if doctor.is_approved == 'A':
+                        login(request, user)
+                        return redirect('Users:d_home')
+                    
+                    return redirect('sign_in')
 
                 elif group == 'sponsor':
                     sponsor = models.Sponsor.objects.get(user=user)
-                    if not sponsor.is_approved:
-                        return redirect('sign_in')
-
-                    login(request, user)
-                    return redirect('Users:s_home')
+                    if sponsor.is_approved == 'A':
+                        login(request, user)
+                        return redirect('Users:s_home')
+                    
+                    return redirect('sign_in')
 
             elif user.is_superuser:
                 login(request, user)

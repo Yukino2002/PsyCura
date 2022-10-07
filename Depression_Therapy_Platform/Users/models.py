@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 import sys
 sys.path.append("..")
@@ -71,7 +72,7 @@ class Doctor(models.Model):
     wallet_balance = models.PositiveIntegerField(default=0)
     qualifications = models.CharField(max_length=1000,blank=True,null=True)
     certificate = models.FileField()
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.CharField(max_length=10,choices=(('A', 'Approved'), ('P', 'Pending'), ('B', 'Banned')),default='P')
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name
@@ -82,7 +83,7 @@ class Sponsor(models.Model):
     qualifications = models.CharField(max_length=1000,blank=True,null=True)
     organisation_name = models.CharField(max_length=100,blank=True,null=True)
     certificate = models.FileField()
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.CharField(max_length=10,choices=(('A', 'Approved'), ('P', 'Pending'), ('B', 'Banned')),default='P')
 
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, null=True, blank=True)
 

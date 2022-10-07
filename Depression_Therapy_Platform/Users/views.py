@@ -28,25 +28,25 @@ def s_home(request):
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def home(request):
-    return render(request, 'Users/staff/profile.html')
+    return render(request, 'Users/staff/profile.html', {'staff':request.user})
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def doctors_pending(request):
-    return render(request, 'Users/staff/d_pending.html')
+    return render(request, 'Users/staff/d_pending.html', {'staff':request.user})
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def doctors_approved(request):
-    return render(request, 'Users/staff/d_approved.html')
+    return render(request, 'Users/staff/d_approved.html', {'staff':request.user})
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
 def doctors_banned(request):
-    return render(request, 'Users/staff/d_banned.html')
+    return render(request, 'Users/staff/d_banned.html', {'staff':request.user})
 
 
 @login_required(login_url='sign_in')
