@@ -1,13 +1,15 @@
 from email.policy import default
 from django.db import models
 import sys
+from Depression_Therapy_Platform.Interactions.models import Appointment, Transaction
 sys.path.append("..")
-from Services.models import Forum
+from Services.models import Forum,Time_Table
 from django.core.validators import RegexValidator,MaxValueValidator,MinValueValidator
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from datetime import datetime
 
 
 class CustomUserManager(BaseUserManager):
@@ -65,6 +67,30 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name
+    
+    def book_appointment(self,date,time,doctor):
+        present_appointments = Appointment.objects.filter(date=date,time=time,doctor=doctor)
+        if present_appointments is None:
+            appointment = Appointment(date=date,time=time,patient=self,doctor=doctor)
+            appointment.save()
+            return "Appointment booked"
+        else:
+            return "Slot unavailable"
+    
+    def make_payment(self,amount,doctor):
+        DT = datetime.now()
+        date = DT.date()
+        time = DT.time()
+
+        new_transaction = Transaction(date = date,
+                                      time = time,
+                                      amount = amount,
+                                      patient= self,
+                                      doctor = doctor)
+        
+        new_transaction.save()
+        
+
 
 
 class Doctor(models.Model):
@@ -76,6 +102,18 @@ class Doctor(models.Model):
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name
+
+    def set_time_slot(self,day,time):
+        slot = Time_Table(day = day,time = time,doctor = self)
+        slot.save()
+    
+    def delete_time_slot(self,day,time):
+        Time_Table.objects.filter(day=day,time=time,doctor=self).delete()
+
+
+
+
+
 
 
 class Sponsor(models.Model):
