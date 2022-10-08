@@ -20,7 +20,7 @@
         <nav>
             <div class="sidebar-button">
                 <i class='bx bx-menu sidebarBtn'></i>
-                <span class="dashboard">Profile</span>
+                <span class="dashboard" id="navbar">Profile</span>
             </div>
         </nav>
         <div class="home-content">
@@ -50,6 +50,16 @@
         window.onunload = function () {
             null
         };
+    </script>
+    <script>
+        var url = window.location.href;
+        var filename = url.substring(url.lastIndexOf('/') + 1);
+        filename = filename.charAt(0).toUpperCase() + filename.slice(1);
+
+        if (filename.match(/\d+/g)) {
+            filename = "Details";
+        }
+        document.getElementById("navbar").innerHTML = filename;
     </script>
 </body>
 
