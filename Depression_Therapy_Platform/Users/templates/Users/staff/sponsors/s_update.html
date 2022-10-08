@@ -3,19 +3,19 @@
 
 {% block sidebar_items %}
 <li>
-    <a href="{% url 'Users:doctors_pending' %}" class="active">
+    <a href="{% url 'Users:sponsors_pending' %}" class="active">
         <i class='bx bx-grid-alt'></i>
         <span class="links_name">Pending</span>
     </a>
 </li>
 <li>
-    <a href="{% url 'Users:doctors_approved' %}">
+    <a href="{% url 'Users:sponsors_approved' %}">
         <i class='bx bx-grid-alt'></i>
         <span class="links_name">Approved</span>
     </a>
 </li>
 <li>
-    <a href="{% url 'Users:doctors_banned' %}">
+    <a href="{% url 'Users:sponsors_banned' %}">
         <i class='bx bx-grid-alt'></i>
         <span class="links_name">Banned</span>
     </a>
@@ -29,13 +29,13 @@
         <div class="flex flex-col pt-4 pb-15 mx-auto my-auto sm:pt-0 sm:mx-0">
             <div class="flex flex-col pt-10 pl-5 mx-auto sm:flex-row sm:mx-0 ">
                 <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
-                    {{doctor.user.first_name}} {{doctor.user.last_name}}</h1>
+                    {{sponsor.user.first_name}} {{sponsor.user.last_name}}</h1>
             </div>
             <div class="items-center justify-between mt-4 pt-8 pl-5">
                 <div class="flex"><span class="mr-1 text-gray-800 font-semibold text-2xl">Professional Experience:
                     </span></div>
                 <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Qualifications:
-                        {{doctor.qualifications}}</span></div>
+                        {{sponsor.qualifications}}</span></div>
                 <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Certificate: <a
                             href="">File</a></span></div>
             </div>
@@ -43,14 +43,14 @@
     </div>
     <div class="w-full items-center justify-between pt-10 pl-5">
         <div class="flex"><span class="mr-1 text-gray-800 font-semibold text-2xl">Personal Details: </span></div>
-        <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Age: {{doctor.user.age}}</span></div>
+        <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Age: {{sponsor.user.age}}</span></div>
         <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Gender:
-                {{doctor.user.get_gender_display}}</span></div>
+                {{sponsor.user.get_gender_display}}</span></div>
         <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Phone Number:
-                {{doctor.user.phone_number}}</span></div>
+                {{sponsor.user.phone_number}}</span></div>
     </div>
     <div class="w-full items-center justify-between pt-10 pl-5">
-        <div class="flex"><span class="mr-1 text-gray-800 font-semibold text-2xl">Current Status: {{doctor.get_is_approved_display}}</span></div>
+        <div class="flex"><span class="mr-1 text-gray-800 font-semibold text-2xl">Current Status: {{sponsor.get_is_approved_display}}</span></div>
         <form action="" method="POST">
             {% csrf_token %}
             <div class="flex">
