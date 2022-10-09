@@ -15,6 +15,19 @@ def p_home(request):
 
 
 @login_required(login_url='sign_in')
+@allowed_users(allowed_users=['patient'])
+def make_payment(request,a_id,amount):
+    appointment = Appointment.objects.all().filter(pk=a_id)
+    patient = appointment.patient
+    doctor = appointment.doctor
+
+    patient.make_payment(amount,doctor)
+
+
+
+
+
+@login_required(login_url='sign_in')
 @allowed_users(allowed_users=['doctor'])
 def d_home(request):
     return render(request, 'Users/doctor/home.html')

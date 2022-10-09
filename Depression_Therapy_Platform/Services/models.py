@@ -1,5 +1,5 @@
 from django.db import models
-from Users.models import Patient,Doctor
+
 
 
 class Forum(models.Model):
@@ -25,7 +25,7 @@ class Session(models.Model):
 class Time_Table(models.Model):
     day = models.CharField(max_length=10,choices=(('Sun','Sunday'),('Mon','Monday'),('Tue','Tuesday'),('Wed','Wednesday'),('Thu','Thursday'),('Fri','Friday'),('Sat','Saturday')))
     time = models.TimeField()
-    doctor = models.ForeignKey(Doctor,on_delete = models.CASCADE)
+    doctor = models.ForeignKey('Users.Doctor',on_delete = models.CASCADE)
 
     class Meta:
         unique_together = (("day","time","doctor"),)

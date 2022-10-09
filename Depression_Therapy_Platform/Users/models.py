@@ -1,7 +1,7 @@
 from email.policy import default
 from django.db import models
 import sys
-from Depression_Therapy_Platform.Interactions.models import Appointment, Transaction
+from Interactions.models import Appointment, Transaction
 sys.path.append("..")
 from Services.models import Forum,Time_Table
 from django.core.validators import RegexValidator,MaxValueValidator,MinValueValidator
@@ -85,10 +85,11 @@ class Patient(models.Model):
         new_transaction = Transaction(date = date,
                                       time = time,
                                       amount = amount,
-                                      patient= self,
+                                      patient = self,
                                       doctor = doctor)
         
         new_transaction.save()
+        new_transaction.transfer()
         
 
 
@@ -97,7 +98,7 @@ class Doctor(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
     wallet_balance = models.PositiveIntegerField(default=0)
     qualifications = models.CharField(max_length=1000,blank=True,null=True)
-    certificate = models.FileField()
+    certificate = models.FileField(default = None)
     is_approved = models.CharField(max_length=10,choices=(('A', 'Approved'), ('P', 'Pending'), ('B', 'Banned')),default='P')
 
     def __str__(self):
