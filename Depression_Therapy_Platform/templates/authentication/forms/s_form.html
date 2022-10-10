@@ -1,9 +1,5 @@
 {% extends 'authentication/forms/base_form.html' %}
 
-{% block heading %}
-<h4>Join our <em>Sponsor</em> community at <em>PsyCura!</em></h4>
-{% endblock %}
-
 {% block details %}
 <div class="col-lg-12">
   <fieldset>
@@ -13,12 +9,12 @@
   </fieldset>
 </div>
 <div class="col-lg-12">
-    <fieldset>
-      <label for="organisation_name" class="form-label">Organisation Name<b>*</b>
-      </label>
-      <input type="text" name="organisation_name" class="name" placeholder="Ex. Capaldi" autocomplete="on" required>
-    </fieldset>
-  </div>
+  <fieldset>
+    <label for="organisation_name" class="form-label">Organisation Name<b>*</b>
+    </label>
+    <input type="text" name="organisation_name" class="name" placeholder="Ex. Capaldi" autocomplete="on" required>
+  </fieldset>
+</div>
 <div class="col-lg-12">
   <fieldset>
     <label for="certificate" class="form-label">

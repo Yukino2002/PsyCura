@@ -1,17 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block navbar %}
-<link rel="stylesheet" href="{% static 'assets/css/cards.css' %}">
-
-<li><a href="/">Home</a></li>
-<li><a href="{% url 'about' %}">About</a></li>
-<li><a href="{% url 'contact' %}">Contact Us</a></li>
-<li><a href="{% url 'sign_up' %}" class="active" id="sign-up">Sign-Up</a></li>
-<li><a href="{% url 'sign_in' %}" id="login">Login</a></li>
-{% endblock %}
-
 {% block main %}
+<link rel="stylesheet" href="{% static 'assets/css/cards.css' %}">
 <div>
     <h1 style="position: relative; text-align: center; padding-top: 13%; font-family: 'Bebas Neue', cursive; word-spacing: 10px; letter-spacing: 4px;">
         How are you looking to join us?
