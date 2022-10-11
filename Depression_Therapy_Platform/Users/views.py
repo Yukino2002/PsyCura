@@ -24,9 +24,6 @@ def make_payment(request,a_id,amount):
     patient.make_payment(amount,doctor)
 
 
-
-
-
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['doctor'])
 def d_home(request):
@@ -111,6 +108,13 @@ def sponsors_update(request, s_id):
         return redirect('Users:sponsors_pending')
 
     return render(request, 'Users/staff/sponsors/s_update.html', {'staff':request.user, 'sponsor':sponsor})
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['admin', 'staff'])
+def forums(request):
+    # forums = Forum.objects.all()
+    return render(request, 'Users/staff/forums/forums.html', {'staff':request.user})
 
 
 @login_required(login_url='sign_in')

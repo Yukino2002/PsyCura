@@ -3,27 +3,33 @@
 
 {% block sidebar_items %}
 <li>
-    <a href="{% url 'Users:doctors_pending' %}" id="pending">
-        <i class='bx bx-edit'></i>
-        <span class="links_name">Pending</span>
+    <a href="{% url 'Users:home' %}">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Profile</span>
     </a>
 </li>
 <li>
-    <a href="{% url 'Users:doctors_approved' %}" id="approved">
-        <i class='bx bx-location-plus' ></i>
-        <span class="links_name">Approved</span>
+    <a href="{% url 'Users:doctors_pending' %}">
+        <i class='bx bx-book-add'></i>
+        <span class="links_name">Doctors</span>
     </a>
 </li>
 <li>
-    <a href="{% url 'Users:doctors_banned' %}" id="banned">
-        <i class='bx bx-error-alt' ></i>
-        <span class="links_name">Banned</span>
+    <a href="{% url 'Users:sponsors_pending' %}">
+        <i class='bx bxs-bank'></i>
+        <span class="links_name">Sponsors</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:forums' %}" class="active">
+        <i class='bx bx-chat'></i>
+        <span class="links_name">Forums</span>
     </a>
 </li>
 {% endblock %}
 
 {% block home_section %}
-{% for doctor in doctors %}
+{% for forum in forums %}
 <a href="{% url 'Users:doctor_update' doctor.pk %}">
     <div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
         style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
@@ -43,18 +49,4 @@
     </div>
 </a>
 {% endfor %}
-<br><br><br>
-
-<script>
-    var url = window.location.href;
-    var url = url.substring(url.lastIndexOf('/') + 1);
-
-    if (url == "d-pending") {
-        document.getElementById("pending").classList.add("active");
-    } else if (url == "d-approved") {
-        document.getElementById("approved").classList.add("active");
-    } else if (url == "d-banned") {
-        document.getElementById("banned").classList.add("active");
-    }
-</script>
 {% endblock %}

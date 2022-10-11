@@ -20,4 +20,5 @@ urlpatterns = [
     path('s-banned', views.sponsors_banned, name='sponsors_banned'), 
     path('s-update/<s_id>', views.sponsors_update, name='sponsor_update'), 
     path('sign-out', views.sign_out, name='sign_out'), 
+    path('forums', views.forums, name='forums'), 
 ]
