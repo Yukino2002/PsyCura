@@ -89,12 +89,12 @@ def create_user(request, group):
 @unauthenticated_user
 def p_sign_up(request):
     if request.method == 'POST':
-        user = create_user(request, Group.objects.get_or_create(name='patient'))
+        user = create_user(request, Group.objects.get(name='patient'))
 
-        patient = models.Patient.objects.create(
+        models.Patient.objects.create(
             user=user,
-            qualifications=request.POST.get('past_diseases'), 
-            certificate=request.POST.get('past_medication')
+            past_diseases=request.POST.get('past_diseases'), 
+            past_medication=request.POST.get('past_medication')
         )
 
         return redirect('sign_in')
@@ -105,9 +105,9 @@ def p_sign_up(request):
 @unauthenticated_user
 def d_sign_up(request):
     if request.method == 'POST':
-        user = create_user(request, Group.objects.get_or_create(name='doctor'))
+        user = create_user(request, Group.objects.get(name='doctor'))
 
-        patient = models.Doctor.objects.create(
+        models.Doctor.objects.create(
             user=user,
             qualifications=request.POST.get('qualifications'), 
             certificate=request.POST.get('certficate')
@@ -121,9 +121,9 @@ def d_sign_up(request):
 @unauthenticated_user
 def s_sign_up(request):
     if request.method == 'POST':
-        user = create_user(request, Group.objects.get_or_create(name='sponsor'))
+        user = create_user(request, Group.objects.get(name='sponsor'))
 
-        sponsor = models.Sponsor.objects.create(
+        models.Sponsor.objects.create(
             user=user, 
             qualifications=request.POST.get('qualifications'), 
             organisation_name=request.POST.get('organisation_name'), 

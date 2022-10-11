@@ -88,11 +88,11 @@
         </div>
     </div>
 </div>
-{% endblock %}
 
 <script>
     var url = window.location.href
     url = url.substring(url.lastIndexOf('/') + 1);
+    console.log(url)
 
     if (url == 'p-sign-up') {
         document.getElementById('heading').innerHTML = 'Patient';
@@ -107,3 +107,4 @@
         $(this).addClass("active");
     });
 </script>
+{% endblock %}
