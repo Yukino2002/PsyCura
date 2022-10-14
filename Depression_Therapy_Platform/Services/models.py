@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Forum(models.Model):
     name = models.CharField(max_length=100)
     date = models.DateField(default=None)
@@ -22,16 +21,16 @@ class Session(models.Model):
     def __str__(self):
         return self.date + ' ' + self.time + ' ' + self.forum.name
 
-class Time_Table(models.Model):
-    day = models.CharField(max_length=10,choices=(('Sun','Sunday'),('Mon','Monday'),('Tue','Tuesday'),('Wed','Wednesday'),('Thu','Thursday'),('Fri','Friday'),('Sat','Saturday')))
-    time = models.TimeField()
-    doctor = models.ForeignKey('Users.Doctor',on_delete = models.CASCADE)
+# class Time_Table(models.Model):
+#     day = models.CharField(max_length=10,choices=(('Sun','Sunday'),('Mon','Monday'),('Tue','Tuesday'),('Wed','Wednesday'),('Thu','Thursday'),('Fri','Friday'),('Sat','Saturday')))
+#     time = models.TimeField()
+#     doctor = models.ForeignKey('Users.Doctor',on_delete = models.CASCADE)
 
-    class Meta:
-        unique_together = (("day","time","doctor"),)
+#     class Meta:
+#         unique_together = (("day","time","doctor"),)
 
-    def __str__(self):
-        return self.day + ' ' + self.time + ' ' + self.doctor
+#     def __str__(self):
+#         return self.day + ' ' + self.time + ' ' + self.doctor
     
     
         
