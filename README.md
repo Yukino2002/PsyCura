@@ -1,1 +1,0 @@
-# Depression-Therapy-Platform
