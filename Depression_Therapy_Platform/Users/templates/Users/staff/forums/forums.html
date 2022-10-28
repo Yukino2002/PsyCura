@@ -21,7 +21,7 @@
     </a>
 </li>
 <li>
-    <a href="{% url 'Users:forums' %}" class="active">
+    <a href="{% url 'Users:staff_forums' %}" class="active">
         <i class='bx bx-chat'></i>
         <span class="links_name">Forums</span>
     </a>
@@ -30,7 +30,7 @@
 
 {% block home_section %}
 {% for forum in forums %}
-<a href="{% url 'Users:doctor_update' doctor.pk %}">
+<a href="">
     <div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
         style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
 
@@ -38,11 +38,10 @@
             <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
                 <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
                     <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
-                        {{doctor.user.first_name}} {{doctor.user.last_name}}</h1>
+                        {{forum.name}}</h1>
                 </div>
                 <div class="items-center justify-between mt-4 ">
-                    <div class="flex"><span class="mr-1 font-semibold">{{doctor.qualifications}}</span></div>
-                    <div class="flex"><span class="mr-1 font-semibold">{{doctor.user.email}}</span></div>
+                    <div class="flex"><span class="mr-1 font-semibold">{{forum.category}}</span></div>
                 </div>
             </div>
         </div>

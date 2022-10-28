@@ -816,15 +816,15 @@ Banner Style
   background-size: cover;
 }
 #section-1 .content-slider .slider #top-banner-2 {
-  background: url('../images/banner-02.jpg') no-repeat center center;
+  background: url('../images/homepage/banner-4.jpg') no-repeat center center;
   background-size: cover;
 }
 #section-1 .content-slider .slider #top-banner-3 {
-  background: url('../images/banner-03.jpg') no-repeat center center;
+  background: url('../images/homepage/banner-3.jpg') no-repeat center center;
   background-size: cover;
 }
 #section-1 .content-slider .slider #top-banner-4 {
-  background: url('../images/banner-04.jpg') no-repeat center center;
+  background: url('../images/homepage/banner-2.jpg') no-repeat center center;
   background-size: cover;
 }
 #section-1 .content-slider nav {
@@ -1057,7 +1057,7 @@ Call To Action Style
 
 .call-to-action {
   margin-top: 120px;
-  background-image: url(../images/cta-bg.jpg);
+  background-image: url(../images/homepage/footer.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -1131,7 +1131,7 @@ About Page Style
 
 .about-main-content {
   margin-top: 70px;
-  background-image: url(../images/about-content-bg.jpg);
+  background-image: url(../images/about/about-content-bg.jpg);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -2018,11 +2018,11 @@ Reservation Page Style
 */
 
 .second-page-heading {
-  background-image: url(../images/heading-bg-02.jpg);
+  background-image: url(../images/contactus/contactus-banner.webp);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 260px 0px 190px 0px;
+  padding: 295px 0px 215px 0px;
   text-align: center;
 }
 

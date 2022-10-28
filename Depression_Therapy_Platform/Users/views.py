@@ -1,4 +1,7 @@
 from .models import *
+import sys
+sys.path.append('..')
+from Services.models import Forum
 from django.shortcuts import render
 from django.http import HttpResponse
 from .decorators import allowed_users
@@ -11,17 +14,17 @@ from django.contrib.auth import authenticate, login, logout
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['patient'])
 def p_home(request):
-    return render(request, 'Users/patient/home.html')
+    return render(request, 'Users/patient/profile/profile.html', {'patient': request.user.patient})
 
 
-@login_required(login_url='sign_in')
-@allowed_users(allowed_users=['patient'])
-def make_payment(request,a_id,amount):
-    appointment = Appointment.objects.all().filter(pk=a_id)
-    patient = appointment.patient
-    doctor = appointment.doctor
+# @login_required(login_url='sign_in')
+# @allowed_users(allowed_users=['patient'])
+# def make_payment(request,a_id,amount):
+#     appointment = Appointment.objects.all().filter(pk=a_id)
+#     patient = appointment.patient
+#     doctor = appointment.doctor
 
-    patient.make_payment(amount,doctor)
+#     patient.make_payment(amount,doctor)
 
 
 @login_required(login_url='sign_in')
@@ -112,9 +115,9 @@ def sponsors_update(request, s_id):
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
-def forums(request):
-    # forums = Forum.objects.all()
-    return render(request, 'Users/staff/forums/forums.html', {'staff':request.user})
+def staff_forums(request):
+    forums = Forum.objects.all()
+    return render(request, 'Users/staff/forums/forums.html', {'staff':request.user, 'forums':forums})
 
 
 @login_required(login_url='sign_in')
