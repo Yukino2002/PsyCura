@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'Users',
     'Services',
     'Interactions',
+    'Patient_Doctor_Bridge'
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

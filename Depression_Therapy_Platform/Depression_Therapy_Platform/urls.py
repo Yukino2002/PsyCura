@@ -15,4 +15,5 @@ urlpatterns = [
     path('d-sign-up', views.d_sign_up, name="d_sign_up"),
     path('s-sign-up', views.s_sign_up, name="s_sign_up"),
     path('users/', include('Users.urls')),
+    path('patient_doctor/',include('Patient_Doctor_Bridge.urls'))
 ]

@@ -1,6 +1,5 @@
 from email.policy import default
 from django.db import models
-from datetime import datetime
 import sys
 sys.path.append("..")
 from Services.models import Forum
@@ -9,6 +8,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from datetime import datetime
 
 
 class CustomUserManager(BaseUserManager):
@@ -98,7 +98,17 @@ class Doctor(models.Model):
     wallet_balance = models.PositiveIntegerField(default=0)
     qualifications = models.CharField(max_length=1000,blank=True,null=True)
     certificate = models.FileField(default = None)
+    specialization = models.CharField(default = 'a',max_length=30,choices=(("abnormal","abnormal"),
+                                                              ("biopsychologist","biopsychologist"),
+                                                              ("cognitive","cognitive"),
+                                                              ("developmental","developmental"),
+                                                              ("personality","personality"),
+                                                              ("forensic","forensic"),
+                                                              ("industrial-organizational","industrial-organizational")))
+    experience = models.PositiveIntegerField(default = 0)
     is_approved = models.CharField(max_length=10,choices=(('A', 'Approved'), ('P', 'Pending'), ('B', 'Banned')),default='P')
+    
+
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name
@@ -121,4 +131,4 @@ class Sponsor(models.Model):
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.user.first_name + ' ' + self.user.last_name
+        return self.user.first_name + ' ' + self.user.last_name 

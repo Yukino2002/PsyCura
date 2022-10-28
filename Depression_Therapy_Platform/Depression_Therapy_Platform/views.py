@@ -2,7 +2,6 @@ from cmath import log
 import sys
 sys.path.append('..')
 from Users import models
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user
@@ -31,9 +30,12 @@ def sign_in(request):
             password=request.POST.get('password')
         )
 
+        print(user)
+
         if user is not None:
             if user.groups.exists():
                 group = user.groups.all()[0].name
+                print(group)
 
                 if group == 'patient':
                     login(request, user)
@@ -56,10 +58,12 @@ def sign_in(request):
                     return redirect('sign_in')
 
             elif user.is_superuser:
+                print("Superuser")
                 login(request, user)
                 return redirect('Users:home')
             
         else:
+            print("Nope")
             return render(request, 'authentication/sign_in.html')
 
     return render(request, 'authentication/sign_in.html')
@@ -89,7 +93,7 @@ def create_user(request, group):
 @unauthenticated_user
 def p_sign_up(request):
     if request.method == 'POST':
-        user = create_user(request, Group.objects.get(name='patient'))
+        user = create_user(request, Group.objects.get_or_create(name='patient')[0])
 
         models.Patient.objects.create(
             user=user,
@@ -105,12 +109,14 @@ def p_sign_up(request):
 @unauthenticated_user
 def d_sign_up(request):
     if request.method == 'POST':
-        user = create_user(request, Group.objects.get(name='doctor'))
+        user = create_user(request, Group.objects.get_or_create(name='doctor')[0])
 
         models.Doctor.objects.create(
             user=user,
             qualifications=request.POST.get('qualifications'), 
-            certificate=request.POST.get('certficate')
+            certificate=request.POST.get('certficate'),
+            experience=request.POST.get('experience'),
+            specialization=request.POST.get('specialization')
         )
 
         return redirect('sign_in')
@@ -121,7 +127,7 @@ def d_sign_up(request):
 @unauthenticated_user
 def s_sign_up(request):
     if request.method == 'POST':
-        user = create_user(request, Group.objects.get(name='sponsor'))
+        user = create_user(request, Group.objects.get_or_create(name='sponsor')[0])
 
         models.Sponsor.objects.create(
             user=user, 

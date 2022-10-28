@@ -7,5 +7,6 @@ app_name = 'Interactions'
 
 
 urlpatterns = [
+    path("book-appointment",views.book_appointment,name="book_appointment")
     
 ]

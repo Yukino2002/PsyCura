@@ -20,5 +20,8 @@ urlpatterns = [
     path('s-banned', views.sponsors_banned, name='sponsors_banned'), 
     path('s-update/<s_id>', views.sponsors_update, name='sponsor_update'), 
     path('sign-out', views.sign_out, name='sign_out'), 
-    path('forums', views.staff_forums, name='staff_forums'), 
+    path('forums', views.forums, name='forums'),
+    path('appointments',views.appointments,name="appointments"),
+    path("p_doctors",views.p_doctors,name="p_doctors"),
+    path("wallet",views.wallet,name="wallet")
 ]

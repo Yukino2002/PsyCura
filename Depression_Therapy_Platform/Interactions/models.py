@@ -8,7 +8,7 @@ class Appointment(models.Model):
     time = models.TimeField(default=None)
     prescription = models.CharField(max_length=1000, blank=True, null=True)
     approved = models.BooleanField(default=False)
-
+    completed = models.BooleanField(default=False)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
 

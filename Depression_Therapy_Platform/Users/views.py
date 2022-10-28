@@ -1,7 +1,4 @@
 from .models import *
-import sys
-sys.path.append('..')
-from Services.models import Forum
 from django.shortcuts import render
 from django.http import HttpResponse
 from .decorators import allowed_users
@@ -14,23 +11,70 @@ from django.contrib.auth import authenticate, login, logout
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['patient'])
 def p_home(request):
-    return render(request, 'Users/patient/profile/profile.html', {'patient': request.user.patient})
+    return render(request, 'Users/patient/home.html',{'patient':request.user})
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['patient'])
+def appointments(request):
+    if request.method=="POST":
+        symptom_desc = request.POST.get("symptoms-box")
+        # Apply NLP here
 
 
-# @login_required(login_url='sign_in')
-# @allowed_users(allowed_users=['patient'])
-# def make_payment(request,a_id,amount):
-#     appointment = Appointment.objects.all().filter(pk=a_id)
-#     patient = appointment.patient
-#     doctor = appointment.doctor
+    return render(request, 'Users/patient/appointments.html')
 
-#     patient.make_payment(amount,doctor)
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['patient'])
+def p_doctors(request):
+    # if request.method == "GET":
+    #     specialization = request.GET.get('specialization')
+    #     experience = request.GET.get('experiance')
+    #     doctors = Doctor.objects.all().filter(is_approved='A',specialization=specialization,experience=experience)
+    # else:
+    if request.method == "POST":
+        specialization = request.POST.get("specialization")
+        experiance = request.POST.get("experience")
+        doctors = Doctor.objects.all().filter(specialization = specialization,experiance = experiance)
+    else:
+        doctors = Doctor.objects.all()
+    return render(request,"Users/patient/p_doctors.html",{'doctors':doctors})
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['patient'])
+def wallet(request):
+    mssg=""
+    patient = Patient.objects.get(pk = request.user.id)
+    if request.method == "POST":
+        action = request.POST.get("type")
+        amount = int(request.POST.get("amount"))
+
+
+        is_auth = authenticate(
+            email = request.user.email,
+            password = request.POST.get("passwd")
+        )
+
+        if is_auth is None:
+            mssg = "Invalid Password"
+        elif action == "add":
+            patient.wallet_balance += amount
+            mssg = "Money added to wallet"
+        elif action == "withdraw":
+            if patient.wallet_balance >= amount:
+                patient.wallet_balance -= amount
+                mssg = "Money withdrawn from wallet"
+            else:
+                mssg = "Invalid amount. Please check the current balance"
+        patient.save()
+    return render(request,"Users/patient/wallet.html",{"patient":patient,"mssg":mssg})
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['doctor'])
 def d_home(request):
-    return render(request, 'Users/doctor/home.html')
+    doctor = Doctor.objects.get(pk = request.user.id)
+    return render(request, 'Users/doctor/home.html',{'doctor':doctor})
 
 
 @login_required(login_url='sign_in')
@@ -115,9 +159,9 @@ def sponsors_update(request, s_id):
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['admin', 'staff'])
-def staff_forums(request):
-    forums = Forum.objects.all()
-    return render(request, 'Users/staff/forums/forums.html', {'staff':request.user, 'forums':forums})
+def forums(request):
+    # forums = Forum.objects.all()
+    return render(request, 'Users/staff/forums/forums.html', {'staff':request.user})
 
 
 @login_required(login_url='sign_in')
