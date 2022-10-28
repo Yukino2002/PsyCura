@@ -1,0 +1,27 @@
+{% extends 'Users/base.html' %}
+
+{% block sidebar %}
+<div class="logo-details">
+    <a href="{% url 'Users:home' %}">
+        <i class='bx bx-plus-medical'></i>
+        <span class="logo_name">PsyCura</span>
+    </a>
+</div>
+<ul class="nav-links">
+    <li class="pb-16">
+        <span class="pl-6 text-white text-2xl">{{staff.first_name}} {{staff.last_name}}</span>
+        <br>
+        <i><span class="pl-6 text-yellow-200">Staff</span></i>
+    </li>
+
+    {% block sidebar_items %}
+    {% endblock %}
+
+    <li class="log_out">
+        <a href="{% url 'Users:sign_out' %}">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+        </a>
+    </li>
+</ul>
+{% endblock %}

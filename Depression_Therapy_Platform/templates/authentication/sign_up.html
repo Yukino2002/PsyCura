@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<link rel="stylesheet" href="{% static 'assets/css/cards.css' %}">
+<div>
+    <h1 style="position: relative; text-align: center; padding-top: 13%; font-family: 'Bebas Neue', cursive; word-spacing: 10px; letter-spacing: 4px;">
+        How are you looking to join us?
+    </h1>
+    <div id="container">
+        <div class="product-image">
+            <a href="{% url 'p_sign_up' %}">
+                <img src="{% static 'assets/images/cards/patient.png' %}" alt="Patient">
+            </a>
+        </div>
+        <div class="product-details">
+            <h1>Patient</h1>
+        </div>
+    </div>
+
+    <div id="container">
+        <div class="product-image">
+            <a href="{% url 'd_sign_up' %}">
+                <img src="{% static 'assets/images/cards/doctor.png' %}" alt="Doctor">
+            </a>
+        </div>
+        <div class="product-details">
+            <h1>Doctor</h1>
+        </div>
+    </div>
+
+    <div id="container">
+        <div class="product-image">
+            <a href="{% url 's_sign_up' %}">
+                <img src="{% static 'assets/images/cards/sponsor.png' %}" alt="Sponsor">
+            </a>
+        </div>
+        <div class="product-details">
+            <h1>Sponsor</h1>
+        </div>
+    </div>
+</div>
+{% endblock %}

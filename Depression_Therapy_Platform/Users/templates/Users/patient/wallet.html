@@ -1,0 +1,109 @@
+{% extends 'Users/base.html' %}
+
+{% block sidebar %}
+<ul class="nav-links">
+    <li class="pb-16">
+        <span class="pl-6 text-white text-2xl">User Name</span>
+        <br>
+        <span class="pl-6 text-yellow-200">Patient</span>
+    </li>
+    <li>
+        <a href="{% url 'Users:home' %}">
+            <i class='bx bx-grid-alt'></i>
+            <span class="links_name">Profile</span>
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'Users:p_doctors'%}">
+            <i class='bx bx-book-add'></i>
+            <span class="links_name">Doctors</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="active">
+            <i class="bx bx-book-add"></i>
+            <span class="links_name">Wallet</span>
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'Patient_Doctor_Bridge:appointments' %}">
+            <i class="bx bx-book-add"></i>
+            <span class="links_name">Appointments</span>
+        </a>
+    </li>
+    
+    <li class="log_out">
+        <a href="">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block home_section %}
+<div class="home-content">
+    <div class="pt-6 pb-50 px-11 bg-white rounded-lg shadow-black border-1"
+    style="position: relative; display: inline-block; width: 50%; height: 62vh; margin: 3% 25%">
+    <div class="w-full items-center justify-between pt-10 pl-5">
+        Current Balance: Rs. {{patient.wallet_balance}} 
+    <div class="w-full items-center justify-between pt-10 pl-5 wallet-container">
+        <button class="main-button wallet-action" >Add Money to Wallet</button>
+        <form action="" method="POST" style="display:none;">
+            {% csrf_token %}
+            <input type="hidden" value="add" name="type">
+            <label for="amount">Amount</label>
+            <input type="number" placeholder="Enter amount to add to wallet" name="amount">
+            <input type="button" class="main-button action-btn" value="Add">
+            <div class="wallet-auth" style="display:none;">
+                <label for="passwd">Password</label>
+                <input type="password" name="passwd" placeholder="Enter password of your account" autocomplete="off" required>
+                <input type="submit" value="Go" class="main-button" name="submit">
+            </div>
+        </form>
+    </div>
+    <div class="w-full items-center justify-between pt-10 pl-5 wallet-container">
+        <button class="main-button wallet-action">Withdraw Money from Wallet</button>
+        <form action="" method="POST" style="display:none;">
+            {% csrf_token %}
+            <input type="hidden" value="withdraw" name="type">
+            <label for="amount">Amount</label>
+            <input type="number" placeholder="Enter amount to withdraw from wallet" name="amount">
+            <input type="button" class="main-button action-btn" value="Withdraw">
+            <div class="wallet-auth" style="display:none;">
+                <label for="passwd">Password</label>
+                <input type="password" name="passwd" placeholder="Enter password of your account" autocomplete="off" required>
+                <input type="submit" value="Go" class="main-button" name="submit">
+            </div>
+        </form>
+    </div>
+    <div class="w-full items-center justify-between pt-10 pl-5 wallet-container">
+        <h1>{{mssg}}</h1>
+    </div>
+</div>
+
+<script>
+    const btn_list = document.querySelectorAll(".wallet-action");
+    btn_list.forEach(btn => {
+        btn.addEventListener("click",() => {
+            const container = btn.closest(".wallet-container");
+            const form = container.querySelector("form");           
+            form.style.display = "block";
+        })
+    });
+
+    const submit_list = document.querySelectorAll(".action-btn");
+    submit_list.forEach(btn =>{
+        btn.addEventListener('click',()=>{
+            const form = btn.closest("form");
+            const auth = form.querySelector(".wallet-auth");
+            auth.style.display = "block";
+        })
+        
+    });
+
+
+</script>
+
+{% endblock %}
+

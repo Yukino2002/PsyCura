@@ -1,0 +1,94 @@
+{% extends 'Users/base.html' %}
+
+{% block sidebar %}
+<ul class="nav-links">
+    <li class="pb-16">
+        <span class="pl-6 text-white text-2xl">User Name</span>
+        <br>
+        <span class="pl-6 text-yellow-200">Patient</span>
+    </li>
+    <li>
+        <a href="{% url 'Users:home' %}">
+            <i class='bx bx-grid-alt'></i>
+            <span class="links_name">Profile</span>
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'Users:p_doctors'%}">
+            <i class='bx bx-book-add'></i>
+            <span class="links_name">Doctors</span>
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'Users:wallet' %}">
+            <i class="bx bx-book-add"></i>
+            <span class="links_name">Wallet</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="active">
+            <i class="bx bx-book-add"></i>
+            <span class="links_name">Appointments</span>
+        </a>
+    </li>
+    
+    <li class="log_out">
+        <a href="">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block home_section %}
+<div class="home-content">
+    <div class="pt-6 pb-50 px-11 bg-white rounded-lg shadow-black border-1"
+    style="position: relative; display: inline-block; width: 50%; height: 62vh; margin: 3% 25%">
+    <div class="flex flex-col items-start w-full m-auto sm:flex-row">
+        <div class="flex flex-col pt-4 pb-15 mx-auto my-auto sm:pt-0 sm:mx-0">
+            <div class="flex flex-col pt-10 pl-5 mx-auto sm:flex-row sm:mx-0 ">
+                <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
+                    {{staff.user.first_name}} {{staff.user.last_name}}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="w-full items-center justify-between pt-10 pl-5">
+        <h1>Doctor Details</h1>
+        <li class="details-list">
+            Name:           {{doctor.user.first_name}} {{doctor.user.last_name}}
+        </li>
+        <li class="details-list">
+            Age :           {{doctor.user.age}}
+        </li>
+        <li class="details-list">
+            Email:          {{doctor.user.email}}
+        </li>
+        <li class="details-list">
+            Phone:          {{doctor.user.phone_number}}
+        </li>
+        <li class="details-list">
+            Specialization: {{doctor.specialization}}
+        </li>
+        <li class="details-list">
+            experience:     {{doctor.experience}} years
+        </li>
+        <li class="details-list">
+            Qualifications: {{doctor.qualifications}}
+        </li>
+    </div>
+    <div class="w-full items-center justify-between pt-10 pl-5">
+        <h1>Slots available</h1>
+        {% for slot in doctor_schedule %}
+        <form action="" method="POST">
+            <span>{{slot.date}}</span>
+            <span>{{slot.time}}</span>
+            <input type="hidden" name="date" value="{{slot.date}}">
+            <input type="hidden" name="time" value="{{slot.time}}">
+            <input type="submit" value="Book">
+        </form>
+        <br>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
