@@ -1,0 +1,20 @@
+{% extends 'authentication/forms/base_form.html' %}
+
+{% block details %}
+<div class="col-lg-12">
+  <fieldset>
+    <label for="qualifications" class="form-label">Qualifications<b>*</b>
+    </label>
+    <input type="text" name="qualifications" class="name" placeholder="Ex. Capaldi" autocomplete="on" required>
+  </fieldset>
+</div>
+<div class="col-lg-12">
+  <fieldset>
+    <label for="certificate" class="form-label">
+      Upload Certificate
+    </label>
+    <input type="file" name="certificate" id="certificate" value="Upload file">
+  </fieldset>
+</div>
+<br>
+{% endblock %}
