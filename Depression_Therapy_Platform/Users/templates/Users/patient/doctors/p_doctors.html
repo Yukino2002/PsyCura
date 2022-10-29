@@ -2,13 +2,13 @@
 
 {% block sidebar_items %}
 <li>
-    <a href="{% url 'Users:home' %}">
+    <a href="{% url 'Users:p_home' %}">
         <i class='bx bx-grid-alt'></i>
         <span class="links_name">Profile</span>
     </a>
 </li>
 <li>
-    <a href="#" class="active">
+    <a href="{% url 'Users:p_doctors' %}" class="active">
         <i class='bx bx-book-add'></i>
         <span class="links_name">Available Doctors</span>
     </a>
@@ -27,26 +27,37 @@
 </li>
 {% endblock %}
 
+{% block navfunc %}
+<div class="search-box">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <input style="height: 50px;" type="text" name="specialization" id="specialization"
+            placeholder="#Abnormal #Cognitive #Personality #Forensic.." />
+        <button type="submit"><i class='bx bx-search-alt-2'
+                style="background-color: #22b3c1; position: absolute;"></i></button>
+    </form>
+</div>
+{% endblock %}
+
 {% block home_section %}
 {% for doctor in doctors %}
-<a href="{% url 'Users:doctor_update' doctor.pk %}">
-    <div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
-        style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
+<div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
+    style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
 
-        <div class="flex flex-col items-start w-full m-auto sm:flex-row">
-            <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
-                <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
-                    <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
-                        {{doctor.user.first_name}} {{doctor.user.last_name}}</h1>
-                </div>
-                <div class="items-center justify-between mt-4 ">
-                    <div class="flex"><span class="mr-1 font-semibold">{{doctor.qualifications}}</span></div>
-                    <div class="flex"><span class="mr-1 font-semibold">{{doctor.user.email}}</span></div>
-                </div>
+    <div class="flex flex-col items-start w-full m-auto sm:flex-row">
+        <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
+            <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
+                <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
+                    {{doctor.user.first_name}} {{doctor.user.last_name}}</h1>
+            </div>
+            <div class="items-center justify-between mt-4 ">
+                <div class="flex"><span class="mr-1 font-semibold">{{doctor.qualifications}}</span></div>
+                <div class="flex"><span class="mr-1 font-semibold">{{doctor.user.email}}</span></div>
+                <div class="flex"><span class="mr-1 font-semibold">{{doctor.get_specialization_display}}</span></div>
             </div>
         </div>
     </div>
-</a>
+</div>
 {% endfor %}
 
 <!-- <div class="home-content">

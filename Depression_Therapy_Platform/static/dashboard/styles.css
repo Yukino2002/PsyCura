@@ -148,12 +148,12 @@ nav .search-box input {
   outline: none;
   background: #F5F6FA;
   border: 2px solid #EFEEF1;
-  border-radius: 6px;
+  border-radius: 7px;
   font-size: 18px;
   padding: 0 15px;
 }
 
-nav .search-box .bx-plus {
+nav .search-box .bx-search-alt-2 {
   position: absolute;
   height: 40px;
   width: 40px;
@@ -181,8 +181,8 @@ nav .search-box .bx-plus {
 }
 
 nav .profile-details img {
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   padding: 5px;
   object-fit: cover;
 }

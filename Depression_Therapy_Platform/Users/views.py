@@ -33,12 +33,13 @@ def appointments(request):
 @allowed_users(allowed_users=['patient'])
 def p_doctors(request):
     patient = Patient.objects.get(user=request.user)
+    doctors = Doctor.objects.all().filter(is_approved='A')
+
     if request.method == "POST":
         specialization = request.POST.get("specialization")
-        experience = request.POST.get("experience")
-        doctors = Doctor.objects.all().filter(specialization = specialization, experience = experience)
-    else:
-        doctors = Doctor.objects.all()
+        specialization = specialization.lower()
+        specialization = specialization[0].upper() + specialization[1:]
+        doctors = Doctor.objects.all().filter(is_approved='A', specialization=specialization)
 
     return render(request,"Users/patient/doctors/p_doctors.html", {'patient':patient, 'doctors':doctors})
 
@@ -47,7 +48,7 @@ def p_doctors(request):
 @allowed_users(allowed_users=['patient'])
 def wallet(request):
     mssg=""
-    patient = Patient.objects.get(pk = request.user.id)
+    patient = Patient.objects.get(pk=request.user.id)
     if request.method == "POST":
         action = request.POST.get("type")
         amount = int(request.POST.get("amount"))

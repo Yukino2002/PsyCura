@@ -7,9 +7,15 @@ app_name = 'Users'
 
 
 urlpatterns = [
-    path('p/profile', views.p_home, name='p_home'), 
+    path('p/profile', views.p_home, name='p_home'),
+    path('appointments',views.appointments,name="appointments"),
+    path("p/doctors",views.p_doctors,name="p_doctors"),
+    path("wallet",views.wallet,name="wallet"),
+
     path('d/profile', views.d_home, name='d_home'), 
+    
     path('s/profile', views.s_home, name='s_home'), 
+    
     path('profile', views.home, name='home'), 
     path('d-pending', views.doctors_pending, name='doctors_pending'), 
     path('d-approved', views.doctors_approved, name='doctors_approved'), 
@@ -21,7 +27,4 @@ urlpatterns = [
     path('s-update/<s_id>', views.sponsors_update, name='sponsor_update'), 
     path('sign-out', views.sign_out, name='sign_out'), 
     path('forums', views.forums, name='forums'),
-    path('appointments',views.appointments,name="appointments"),
-    path("p_doctors",views.p_doctors,name="p_doctors"),
-    path("wallet",views.wallet,name="wallet")
 ]
