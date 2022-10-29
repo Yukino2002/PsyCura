@@ -21,13 +21,11 @@ def p_home(request):
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['patient'])
-def appointments(request):
-    if request.method=="POST":
-        symptom_desc = request.POST.get("symptoms-box")
-        # Apply NLP here
+def p_appoint(request, d_id):
+        patient = Patient.objects.get(user=request.user)
+        doctor = Doctor.objects.get(pk=d_id)
 
-
-    return render(request, 'Users/patient/appointments.html')
+        return render(request, 'Users/patient/doctors/p_doctors_appoint.html', {'patient':patient, 'doctor':doctor})
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['patient'])

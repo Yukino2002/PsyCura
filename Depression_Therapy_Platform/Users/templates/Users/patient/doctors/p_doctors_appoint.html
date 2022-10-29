@@ -1,0 +1,75 @@
+{% extends 'Users/patient/patient_base.html' %}
+{% load static %}
+
+{% block sidebar_items %}
+<li>
+    <a href="{% url 'Users:p_home' %}">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Profile</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:p_doctors' %}" class="active">
+        <i class='bx bx-book-add'></i>
+        <span class="links_name">Available Doctors</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:wallet' %}">
+        <i class="bx bx-book-add"></i>
+        <span class="links_name">Your Wallet</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Patient_Doctor_Bridge:appointments' %}">
+        <i class="bx bx-book-add"></i>
+        <span class="links_name">Scheduled Appointments</span>
+    </a>
+</li>
+{% endblock %}
+
+{% block home_section %}
+<div class="pt-6 pb-50 px-11 bg-white rounded-lg shadow-black border-1"
+    style="position: relative; display: inline-block; width: 50%; height: 62vh; margin: 3% 25%">
+    <div class="flex flex-col items-start w-full m-auto sm:flex-row">
+        <div class="flex flex-col pt-4 pb-15 mx-auto my-auto sm:pt-0 sm:mx-0">
+            <div class="flex flex-col pt-10 pl-5 mx-auto sm:flex-row sm:mx-0 ">
+                <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
+                    {{doctor.user.first_name}} {{doctor.user.last_name}}</h1>
+            </div>
+            <div class="items-center justify-between mt-4 pt-8 pl-5">
+                <div class="flex"><span class="mr-1 text-gray-800 font-semibold text-2xl">Professional Experience:
+                    </span></div>
+                <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Qualifications:
+                        {{doctor.qualifications}}</span></div>
+                <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Certificate: <a
+                            href="">File</a></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="w-full items-center justify-between pt-10 pl-5">
+        <div class="flex"><span class="mr-1 text-gray-800 font-semibold text-2xl">Personal Details: </span></div>
+        <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Age: {{doctor.user.age}}</span></div>
+        <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Gender:
+                {{doctor.user.get_gender_display}}</span></div>
+        <div class="flex"><span class="mr-1 text-gray-600 font-semibold text-lg">Phone Number:
+                {{doctor.user.phone_number}}</span></div>
+    </div>
+    <div class="w-full items-center justify-between pt-10 pl-5">
+        <div class="flex"><span class="mr-1 text-gray-800 font-semibold text-2xl">Current Status: {{doctor.get_is_approved_display}}</span></div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="flex">
+                <select name="is_approved" id="is_approved" class="form-control bg-gray rounded-lg mt-2 text-xl pl-1 pr-2">
+                    <option value="A" class="mr-1 text-gray-600 font-semibold text-xl">Approved</option>
+                    <option value="P" class="mr-1 text-gray-600 font-semibold text-xl">Pending</option>
+                    <option value="B" class="mr-1 text-gray-600 font-semibold text-xl">Banned</option>
+                </select>
+            </div>
+            <div class="flex">
+                <button type="submit" class="btn btn-primary rounded-lg mt-4 px-2 py-2 text-base" style="background-color: #22b3c1;">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

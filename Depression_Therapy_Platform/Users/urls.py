@@ -8,9 +8,9 @@ app_name = 'Users'
 
 urlpatterns = [
     path('p/profile', views.p_home, name='p_home'),
-    path('appointments',views.appointments,name="appointments"),
-    path("p/doctors",views.p_doctors,name="p_doctors"),
-    path("wallet",views.wallet,name="wallet"),
+    path('p/appointments/<d_id>',views.p_appoint, name="p_appoint"),
+    path("p/doctors",views.p_doctors, name="p_doctors"),
+    path("wallet",views.wallet, name="wallet"),
 
     path('d/profile', views.d_home, name='d_home'), 
     

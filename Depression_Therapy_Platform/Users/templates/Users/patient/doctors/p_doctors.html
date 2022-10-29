@@ -41,23 +41,26 @@
 
 {% block home_section %}
 {% for doctor in doctors %}
-<div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
-    style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
+<a href="{% url 'Users:p_appoint' doctor.pk %}">
+    <div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
+        style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
 
-    <div class="flex flex-col items-start w-full m-auto sm:flex-row">
-        <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
-            <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
-                <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
-                    {{doctor.user.first_name}} {{doctor.user.last_name}}</h1>
-            </div>
-            <div class="items-center justify-between mt-4 ">
-                <div class="flex"><span class="mr-1 font-semibold">{{doctor.qualifications}}</span></div>
-                <div class="flex"><span class="mr-1 font-semibold">{{doctor.user.email}}</span></div>
-                <div class="flex"><span class="mr-1 font-semibold">{{doctor.get_specialization_display}}</span></div>
+        <div class="flex flex-col items-start w-full m-auto sm:flex-row">
+            <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
+                <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
+                    <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
+                        {{doctor.user.first_name}} {{doctor.user.last_name}}</h1>
+                </div>
+                <div class="items-center justify-between mt-4 ">
+                    <div class="flex"><span class="mr-1 font-semibold">{{doctor.qualifications}}</span></div>
+                    <div class="flex"><span class="mr-1 font-semibold">{{doctor.user.email}}</span></div>
+                    <div class="flex"><span class="mr-1 font-semibold">{{doctor.get_specialization_display}}</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</a>
 {% endfor %}
 
 <!-- <div class="home-content">
