@@ -102,68 +102,58 @@ def p_doctor_card(request, d_id):
         return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor})
 
 
-@login_required(login_url='sign_in')
-@allowed_users(allowed_users=['patient'])
-def wallet(request):
-    mssg=""
-    patient = Patient.objects.get(pk=request.user.id)
-    if request.method == "POST":
-        action = request.POST.get("type")
-        amount = int(request.POST.get("amount"))
+# @login_required(login_url='sign_in')
+# @allowed_users(allowed_users=['patient'])
+# def wallet(request):
+#     mssg=""
+#     patient = Patient.objects.get(pk=request.user.id)
+#     if request.method == "POST":
+#         action = request.POST.get("type")
+#         amount = int(request.POST.get("amount"))
 
 
-        is_auth = authenticate(
-            email = request.user.email,
-            password = request.POST.get("passwd")
-        )
+#         is_auth = authenticate(
+#             email = request.user.email,
+#             password = request.POST.get("passwd")
+#         )
 
-        if is_auth is None:
-            mssg = "Invalid Password"
-        elif action == "add":
-            patient.wallet_balance += amount
-            mssg = "Money added to wallet"
-        elif action == "withdraw":
-            if patient.wallet_balance >= amount:
-                patient.wallet_balance -= amount
-                mssg = "Money withdrawn from wallet"
-            else:
-                mssg = "Invalid amount. Please check the current balance"
-        patient.save()
-    return render(request,"Users/patient/wallet.html", {"patient":patient,"mssg":mssg})
+#         if is_auth is None:
+#             mssg = "Invalid Password"
+#         elif action == "add":
+#             patient.wallet_balance += amount
+#             mssg = "Money added to wallet"
+#         elif action == "withdraw":
+#             if patient.wallet_balance >= amount:
+#                 patient.wallet_balance -= amount
+#                 mssg = "Money withdrawn from wallet"
+#             else:
+#                 mssg = "Invalid amount. Please check the current balance"
+#         patient.save()
+#     return render(request,"Users/patient/wallet.html", {"patient":patient,"mssg":mssg})
+
+
+def current_time():
+    date, time = datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S")
+    return [int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2]), int(time[3:5])]
+
+
+def appointment_time(appointment):
+    date, time = appointment.date, appointment.start_time
+    return [int(str(date)[0:4]), int(str(date)[5:7]), int(str(date)[8:10]), int(str(time)[0:2]), int(str(time)[3:5])]
 
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['patient'])
 def p_appointments_future(request):
+    c = current_time()
+
     patient = Patient.objects.get(user=request.user)
-    date = datetime.now()
-    date = date.strftime("%Y-%m-%d")
-    time = datetime.now()
-    time = time.strftime("%H:%M:%S")
-
-    c_year, c_month, c_day, c_hour, c_minute = int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2]), int(time[3:5])
-
     appointments = Appointment.objects.all().filter(patient=patient)
     appointments_future = []
     for appointment in appointments:
-        date = appointment.date
-        time = appointment.start_time
-        a_year, a_month, a_day, a_hour, a_minute = int(str(date)[0:4]), int(str(date)[5:7]), int(str(date)[8:10]), int(str(time)[0:2]), int(str(time)[3:5])
-
-        if a_year > c_year:
+        a = appointment_time(appointment)
+        if a[0] > c[0] or (a[0] == c[0] and a[1] > c[1]) or (a[0] == c[0] and a[1] == c[1] and a[2] > c[2]) or (a[0] == c[0] and a[1] == c[1] and a[2] == c[2] and a[3] > c[3]) or (a[0] == c[0] and a[1] == c[1] and a[2] == c[2] and a[3] == c[3] and a[4] > c[4]):
             appointments_future.append(appointment)
-        elif a_year == c_year:
-            if a_month > c_month:
-                appointments_future.append(appointment)
-            elif a_month == c_month:
-                if a_day > c_day:
-                    appointments_future.append(appointment)
-                elif a_day == c_day:
-                    if a_hour > c_hour:
-                        appointments_future.append(appointment)
-                    elif a_hour == c_hour:
-                        if a_minute > c_minute:
-                            appointments_future.append(appointment)
 
     return render(request, 'Users/patient/appointments/a_list.html', {'patient':patient, 'appointments':appointments_future})
 
@@ -171,35 +161,15 @@ def p_appointments_future(request):
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['patient'])
 def p_appointments_past(request):
+    c = current_time()
+    
     patient = Patient.objects.get(user=request.user)
-    date = datetime.now()
-    date = date.strftime("%Y-%m-%d")
-    time = datetime.now()
-    time = time.strftime("%H:%M:%S")
-
-    c_year, c_month, c_day, c_hour, c_minute = int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2]), int(time[3:5])
-
     appointments = Appointment.objects.all().filter(patient=patient)
     appointments_past = []
     for appointment in appointments:
-        date = appointment.date
-        time = appointment.start_time
-        a_year, a_month, a_day, a_hour, a_minute = int(str(date)[0:4]), int(str(date)[5:7]), int(str(date)[8:10]), int(str(time)[0:2]), int(str(time)[3:5])
-
-        if a_year < c_year:
+        a = appointment_time(appointment)
+        if a[0] < c[0] or (a[0] == c[0] and a[1] < c[1]) or (a[0] == c[0] and a[1] == c[1] and a[2] < c[2]) or (a[0] == c[0] and a[1] == c[1] and a[2] == c[2] and a[3] < c[3]) or (a[0] == c[0] and a[1] == c[1] and a[2] == c[2] and a[3] == c[3] and a[4] < c[4]):
             appointments_past.append(appointment)
-        elif a_year == c_year:
-            if a_month < c_month:
-                appointments_past.append(appointment)
-            elif a_month == c_month:
-                if a_day < c_day:
-                    appointments_past.append(appointment)
-                elif a_day == c_day:
-                    if a_hour < c_hour:
-                        appointments_past.append(appointment)
-                    elif a_hour == c_hour:
-                        if a_minute < c_minute:
-                            appointments_past.append(appointment)
 
     return render(request, 'Users/patient/appointments/a_list.html', {'patient':patient, 'appointments':appointments_past})
 
