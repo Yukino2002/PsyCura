@@ -116,7 +116,9 @@ def d_sign_up(request):
             qualifications=request.POST.get('qualifications'), 
             certificate=request.POST.get('certficate'),
             experience=request.POST.get('experience'),
-            specialization=request.POST.get('specialization')
+            specialization=request.POST.get('specialization'),
+            fee=500,
+            rating=3
         )
 
         return redirect('sign_in')

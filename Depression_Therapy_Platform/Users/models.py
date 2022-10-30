@@ -94,6 +94,8 @@ class Doctor(models.Model):
                                                                            )
                                       )
     experience = models.PositiveIntegerField(default=0, blank=True, null=True)
+    rating = models.PositiveIntegerField(default=0, blank=True, null=True)
+    fee = models.PositiveIntegerField(default=500, blank=True, null=True)
     is_approved = models.CharField(max_length=10, choices=(
         ('A', 'Approved'), ('P', 'Pending'), ('B', 'Banned')), default='P')
 
@@ -115,3 +117,16 @@ class Sponsor(models.Model):
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name
+
+
+class Appointment(models.Model):
+    date = models.DateField(default=None)
+    time = models.TimeField(default=None)
+    prescription = models.CharField(max_length=1000, blank=True, null=True)
+    approved = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return str(self.date) + ' ' + str(self.time) + ' ' + str(self.patient.user.first_name) + ' ' + str(self.doctor.user.first_name)
