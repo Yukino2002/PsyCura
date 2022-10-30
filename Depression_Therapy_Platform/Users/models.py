@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
-from Services.models import Forum
 from email.policy import default
 from django.db import models
 import sys
@@ -56,6 +55,16 @@ class CustomUser(AbstractUser):
 
     def _str_(self):
         return self.email
+
+
+class Forum(models.Model):
+    name = models.CharField(max_length=100)
+    date = models.DateField(default=None)
+    number_patients = models.IntegerField(default=0)
+    category = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Patient(models.Model):
@@ -117,6 +126,16 @@ class Sponsor(models.Model):
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name
+
+
+class Log(models.Model):
+    body = models.CharField(max_length=1000)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    date_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.forum.name + ' ' + self.patient.user.first_name + ' ' + self.patient.user.last_name
 
 
 class Appointment(models.Model):

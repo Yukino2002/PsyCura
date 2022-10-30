@@ -91,9 +91,6 @@ def p_doctor_card(request, d_id):
             time = request.POST.get('time')
 
             year, month, day, hour, minute = int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2]), int(time[3:5])
-            if minute < 0:
-                hour = hour-1
-                minute = minute+60
                 
             c = [year, month, day, hour, minute]
             appointments = Appointment.objects.all().filter(doctor=doctor)
@@ -110,6 +107,16 @@ def p_doctor_card(request, d_id):
             
             if len(appointments_clash) == 0:
                 appointment = Appointment.objects.create(doctor=doctor, patient=patient, date=date, start_time=time, end_time=str(hour+1)+':'+str(minute))
+                minute = minute - 30
+                if minute < 0:
+                    minute = 60 + minute
+                    hour = hour - 1
+        
+                hour = hour - 5
+                if hour < 0:
+                    hour = hour + 12
+                    day = day - 1
+
                 calendar_API(doctor, patient, year, month, day, hour, minute)
                 return redirect('Users:p_appointments_future')
 
