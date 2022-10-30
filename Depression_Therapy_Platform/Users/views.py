@@ -1,4 +1,5 @@
 from calendar import month
+from email import message
 from .models import *
 from django.shortcuts import render
 from datetime import datetime
@@ -83,23 +84,40 @@ def calendar_API(doctor, patient, year, month, day, hour, minute):
 def p_doctor_card(request, d_id):
         patient = Patient.objects.get(user=request.user)
         doctor = Doctor.objects.get(pk=d_id)
+        message = False
 
         if request.method == 'POST':
             date = request.POST.get('date')
             time = request.POST.get('time')
 
-            year, month, day, hour, minute = int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2])-5, int(time[3:5])-30
+            year, month, day, hour, minute = int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2]), int(time[3:5])
             if minute < 0:
                 hour = hour-1
                 minute = minute+60
-
-            appointment = Appointment.objects.create(doctor=doctor, patient=patient, date=date, start_time=str(hour)+':'+str(minute)+':00', end_time=str(hour+1)+':'+str(minute)+':00')
-            appointment.save()
-            calendar_API(doctor, patient, year, month, day, hour, minute)            
+                
+            c = [year, month, day, hour, minute]
+            appointments = Appointment.objects.all().filter(doctor=doctor)
+            appointments_clash = []
+            for appointment in appointments:
+                a = appointment_time(appointment)
+                if c[0] == a[0] and c[1] == a[1] and c[2] == a[2]:
+                    if c[3] == a[3]:
+                        if c[4] >= a[4] and c[4] < a[4]+60:
+                            appointments_clash.append(appointment)
+                    elif c[3] == a[3]+1:
+                        if c[4] < a[4]:
+                            appointments_clash.append(appointment)
             
-            return redirect('Users:p_appointments_future')
+            if len(appointments_clash) == 0:
+                appointment = Appointment.objects.create(doctor=doctor, patient=patient, date=date, start_time=time, end_time=str(hour+1)+':'+str(minute))
+                calendar_API(doctor, patient, year, month, day, hour, minute)
+                return redirect('Users:p_appointments_future')
 
-        return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor})
+            else:
+                message = True
+                return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor, 'message':message})    
+
+        return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor, 'message':message})
 
 
 # @login_required(login_url='sign_in')
@@ -174,18 +192,6 @@ def p_appointments_past(request):
     return render(request, 'Users/patient/appointments/a_list.html', {'patient':patient, 'appointments':appointments_past})
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['doctor'])
 def d_home(request):
@@ -197,27 +203,6 @@ def d_home(request):
 @allowed_users(allowed_users=['sponsor'])
 def s_home(request):
     return render(request, 'Users/sponsor/home.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @login_required(login_url='sign_in')
@@ -305,3 +290,5 @@ def forums(request):
 def sign_out(request):
     logout(request)
     return redirect('sign_in')
+
+    

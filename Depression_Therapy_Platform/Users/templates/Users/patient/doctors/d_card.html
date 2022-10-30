@@ -23,6 +23,14 @@
 {% endblock %}
 
 {% block home_section %}
+{% if message %}
+<div class="alert alert-success" role="alert">
+    <script>
+        alert("The appointment slot has been booked already. Please select another slot.");
+    </script>
+</div>
+{% endif %}
+
 <div class="pt-3 pb-50 px-11 bg-white rounded-lg shadow-black border-1"
     style="position: relative; display: inline-block; width: 50%; height: 73vh; margin: 3% 25%">
     <div class="flex flex-col items-start w-full m-auto sm:flex-row">
