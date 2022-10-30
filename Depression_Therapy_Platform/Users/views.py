@@ -1,12 +1,10 @@
-from calendar import month
-from email import message
+from detoxify import Detoxify
 from .models import *
 from django.shortcuts import render
 from datetime import datetime
 from django.http import HttpResponse
 from .decorators import allowed_users
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .Google import Create_Service, convert_to_RFC_datetime
@@ -84,7 +82,6 @@ def calendar_API(doctor, patient, year, month, day, hour, minute):
 def p_doctor_card(request, d_id):
         patient = Patient.objects.get(user=request.user)
         doctor = Doctor.objects.get(pk=d_id)
-        message = False
 
         if request.method == 'POST':
             date = request.POST.get('date')
@@ -121,10 +118,9 @@ def p_doctor_card(request, d_id):
                 return redirect('Users:p_appointments_future')
 
             else:
-                message = True
-                return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor, 'message':message})    
+                return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor, 'message':True})    
 
-        return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor, 'message':message})
+        return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor, 'message':False})
 
 
 def current_time():
@@ -171,10 +167,21 @@ def p_appointments_past(request):
 
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['patient'])
-def forums(request):
+def p_forums(request):
     patient = Patient.objects.get(user=request.user)
-    # forums = Forum.objects.all()
-    return render(request, 'Users/patient/forums/forums.html', {'patient':patient})
+    forum = Forum.objects.get(pk=patient.forum.pk)
+    logs = sorted(Log.objects.all().filter(forum=forum), key=lambda x: x.date_time, reverse=True)
+
+    if request.method == 'POST':
+        log = request.POST.get('log')
+        check = Detoxify('original').predict(log)
+        if(check['toxicity'] > 0.8):
+            return render(request, 'Users/patient/forums/forums.html', {'patient':patient, 'logs':logs, 'message':True})
+        
+        Log.objects.create(body=log, forum=forum, patient=patient, date_time=datetime.now())
+        return redirect('Users:p_forums')
+    
+    return render(request, 'Users/patient/forums/forums.html', {'patient':patient, 'logs':logs, 'message':False})
 
 
 @login_required(login_url='sign_in')

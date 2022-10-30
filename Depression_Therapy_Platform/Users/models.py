@@ -1,10 +1,8 @@
 from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator
-from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
-from email.policy import default
 from django.db import models
 import sys
 sys.path.append("..")
@@ -135,7 +133,7 @@ class Log(models.Model):
     date_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.forum.name + ' ' + self.patient.user.first_name + ' ' + self.patient.user.last_name
+        return self.body + ' ' + self.patient.user.first_name + ' ' + self.patient.user.last_name
 
 
 class Appointment(models.Model):

@@ -12,6 +12,7 @@ urlpatterns = [
     path('p/doctors/<d_id>',views.p_doctor_card, name="p_doctor_card"),
     path('p/appointments/future',views.p_appointments_future, name="p_appointments_future"),
     path('p/appointments/past',views.p_appointments_past, name="p_appointments_past"),
+    path('p/forums', views.p_forums, name='p_forums'),
 
     path('d/profile', views.d_home, name='d_home'), 
     
@@ -27,5 +28,4 @@ urlpatterns = [
     path('s-banned', views.sponsors_banned, name='sponsors_banned'), 
     path('s-update/<s_id>', views.sponsors_update, name='sponsor_update'), 
     path('sign-out', views.sign_out, name='sign_out'), 
-    path('forums', views.forums, name='forums'),
 ]

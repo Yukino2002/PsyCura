@@ -20,7 +20,7 @@
     </a>
 </li>
 <li>
-    <a href="{% url 'Users:forums' %}" class="active">
+    <a href="{% url 'Users:p_forums' %}" class="active">
         <i class='bx bx-chat'></i>
         <span class="links_name">Forums</span>
     </a>
@@ -31,8 +31,7 @@
 <div class="search-box">
     <form method="POST" action="">
         {% csrf_token %}
-        <input style="height: 50px;" type="text" name="specialization" id="specialization"
-            placeholder="Send a message.." />
+        <input style="height: 50px;" type="text" name="log" id="log" placeholder="Send a message.." />
         <button type="submit"><i class='bx bx-search-alt-2'
                 style="background-color: #22b3c1; position: absolute;"></i></button>
     </form>
@@ -40,24 +39,52 @@
 {% endblock %}
 
 {% block home_section %}
-{% for doctor in doctors %}
+{% if message %}
+<div class="alert alert-success" role="alert">
+    <script>
+        alert("The message violates our community guidelines. If you think this is a mistake, please contact us.");
+    </script>
+</div>
+{% endif %}
+
+{% for log in logs %}
+{% if log.patient == patient %}
 <div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
-    style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
+    style="position: relative; display: inline-block; width: 40%; margin-left: 58%; margin-right: 1%; margin-top: 2%; padding-left: 1.75rem; padding-right: 0; padding-top: 0.75rem; padding-bottom: 1.25rem;">
 
     <div class="flex flex-col items-start w-full m-auto sm:flex-row">
-        <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
-            <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
-                <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
-                    {{doctor.user.first_name}} {{doctor.user.last_name}}</h1>
-            </div>
-            <div class="items-center justify-between mt-4 ">
-                <div class="flex"><span class="mr-1 font-semibold">{{doctor.qualifications}}</span></div>
-                <div class="flex"><span class="mr-1 font-semibold">{{doctor.user.email}}</span></div>
-                <div class="flex"><span class="mr-1 font-semibold">{{doctor.get_specialization_display}}</span>
+        <div class="flex flex-col pt-1 mx-auto my-auto sm:pt-0 sm:mx-0">
+            <div class="items-center justify-between mt-1">
+                <div class="flex">
+                    <p class="mr-1 font-semibold">{{log.body}}</p>
                 </div>
             </div>
         </div>
     </div>
+    <div class="flex">
+        <p style="padding-left: 72%; font-size: small;">~{{log.patient.user.first_name}}
+            {{log.patient.user.last_name}}<br>{{log.date_time}}</p>
+    </div>
 </div>
+{% else %}
+<div class="pt-6 pb-9 px-11 bg-white rounded-lg shadow border-1"
+    style="position: relative; display: inline-block; width: 40%; margin-left: 2%; margin-right: 43%; margin-top: 2%; padding-left: 1.75rem; padding-right: 0; padding-top: 0.75rem; padding-bottom: 1.25rem;">
+
+    <div class="flex flex-col items-start w-full m-auto sm:flex-row">
+        <div class="flex flex-col pt-1 mx-auto my-auto sm:pt-0 sm:mx-0">
+            <div class="items-center justify-between mt-1">
+                <div class="flex">
+                    <p class="mr-1 font-semibold">{{log.body}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex">
+        <p style="padding-left: 72%; font-size: small;">~{{log.patient.user.first_name}}
+            {{log.patient.user.last_name}}<br>{{log.date_time}}</p>
+    </div>
+</div>
+{% endif %}
 {% endfor %}
+<br><br>
 {% endblock %}
