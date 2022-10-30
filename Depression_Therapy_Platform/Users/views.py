@@ -127,36 +127,6 @@ def p_doctor_card(request, d_id):
         return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor, 'message':message})
 
 
-# @login_required(login_url='sign_in')
-# @allowed_users(allowed_users=['patient'])
-# def wallet(request):
-#     mssg=""
-#     patient = Patient.objects.get(pk=request.user.id)
-#     if request.method == "POST":
-#         action = request.POST.get("type")
-#         amount = int(request.POST.get("amount"))
-
-
-#         is_auth = authenticate(
-#             email = request.user.email,
-#             password = request.POST.get("passwd")
-#         )
-
-#         if is_auth is None:
-#             mssg = "Invalid Password"
-#         elif action == "add":
-#             patient.wallet_balance += amount
-#             mssg = "Money added to wallet"
-#         elif action == "withdraw":
-#             if patient.wallet_balance >= amount:
-#                 patient.wallet_balance -= amount
-#                 mssg = "Money withdrawn from wallet"
-#             else:
-#                 mssg = "Invalid amount. Please check the current balance"
-#         patient.save()
-#     return render(request,"Users/patient/wallet.html", {"patient":patient,"mssg":mssg})
-
-
 def current_time():
     date, time = datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S")
     return [int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2]), int(time[3:5])]
