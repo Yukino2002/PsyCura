@@ -170,6 +170,14 @@ def p_appointments_past(request):
 
 
 @login_required(login_url='sign_in')
+@allowed_users(allowed_users=['patient'])
+def forums(request):
+    patient = Patient.objects.get(user=request.user)
+    # forums = Forum.objects.all()
+    return render(request, 'Users/patient/forums/forums.html', {'patient':patient})
+
+
+@login_required(login_url='sign_in')
 @allowed_users(allowed_users=['doctor'])
 def d_home(request):
     doctor = Doctor.objects.get(pk = request.user.id)
@@ -254,13 +262,6 @@ def sponsors_update(request, s_id):
         return redirect('Users:sponsors_pending')
 
     return render(request, 'Users/staff/sponsors/s_update.html', {'staff':request.user, 'sponsor':sponsor})
-
-
-@login_required(login_url='sign_in')
-@allowed_users(allowed_users=['admin', 'staff'])
-def forums(request):
-    # forums = Forum.objects.all()
-    return render(request, 'Users/staff/forums/forums.html', {'staff':request.user})
 
 
 @login_required(login_url='sign_in')
