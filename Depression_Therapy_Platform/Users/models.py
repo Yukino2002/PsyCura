@@ -121,12 +121,12 @@ class Sponsor(models.Model):
 
 class Appointment(models.Model):
     date = models.DateField(default=None)
-    time = models.TimeField(default=None)
-    prescription = models.CharField(max_length=1000, blank=True, null=True)
+    start_time = models.TimeField(default=None)
+    end_time = models.TimeField(default=None)
     approved = models.BooleanField(default=False)
-    completed = models.BooleanField(default=False)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True)
+
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return str(self.date) + ' ' + str(self.time) + ' ' + str(self.patient.user.first_name) + ' ' + str(self.doctor.user.first_name)
+        return str(self.date) + ' ' + str(self.patient.user.first_name) + ' ' + str(self.doctor.user.first_name)

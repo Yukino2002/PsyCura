@@ -1,6 +1,7 @@
 from calendar import month
 from .models import *
 from django.shortcuts import render
+from datetime import datetime
 from django.http import HttpResponse
 from .decorators import allowed_users
 from django.shortcuts import render, redirect
@@ -10,86 +11,11 @@ from django.contrib.auth import authenticate, login, logout
 from .Google import Create_Service, convert_to_RFC_datetime
 
 
-
-
-
-
 @login_required(login_url='sign_in')
 @allowed_users(allowed_users=['patient'])
 def p_home(request):
     patient = Patient.objects.get(user=request.user)
     return render(request, 'Users/patient/profile/profile.html', {'patient':patient})
-
-
-
-
-
-
-
-@login_required(login_url='sign_in')
-@allowed_users(allowed_users=['patient'])
-def p_appoint(request, d_id):
-        patient = Patient.objects.get(user=request.user)
-        doctor = Doctor.objects.get(pk=d_id)
-
-        if request.method == 'POST':
-            date = request.POST.get('date')
-            time = request.POST.get('time')
-            year, month, day, hour, minute = int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2]), int(time[3:5])
-            
-            CLIENT_SECRET_FILE='static/assets/client_secret_PsyCura.json'
-            API_NAME='calendar'
-            API_VERSION='v3'
-            SCOPES=['https://www.googleapis.com/auth/calendar']
-            calendar_id = '5lnu2uakgegiudqs7taniti1bs@group.calendar.google.com'
-
-            service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
-            event_request_body = {
-                'start': {
-                    'dateTime': convert_to_RFC_datetime(year, month, day, hour, minute),
-                    'timeZone': 'Asia/Kolkata',
-                },
-                'end': {
-                    'dateTime': convert_to_RFC_datetime(year, month, day, hour+1, minute),
-                    'timeZone': 'Asia/Kolkata',
-                },
-                'summary': 'PsyCura Appointment',
-                'description': 'Meeting',
-                'colorId': 1,
-                'attendees': [
-                    {
-                        'email': str(doctor.user.email),
-                        'displayName': str(doctor.user.first_name) + ' ' + str(doctor.user.last_name),
-                        'organizer': True,
-                        'self': True,
-                        'resource': False,
-                        'optional': False,
-                        'responseStatus': 'accepted',
-                    },
-                    {
-                        'email': str(patient.user.email),
-                        'displayName': str(patient.user.first_name) + ' ' + str(patient.user.last_name),
-                        'organizer': False,
-                        'self': False,
-                        'resource': False,
-                        'optional': False,
-                        'responseStatus': 'accepted',
-                    }
-                ],
-            }
-
-            response = service.events().insert(calendarId=calendar_id, body=event_request_body).execute()
-            return redirect('Users:p_home')
-
-        return render(request, 'Users/patient/doctors/p_doctors_appoint.html', {'patient':patient, 'doctor':doctor})
-
-
-
-
-
-
-
-
 
 
 @login_required(login_url='sign_in')
@@ -105,6 +31,75 @@ def p_doctors(request):
         doctors = Doctor.objects.all().filter(is_approved='A', specialization=specialization)
 
     return render(request, "Users/patient/doctors/d_list.html", {'patient':patient, 'doctors':doctors})
+
+
+def calendar_API(doctor, patient, year, month, day, hour, minute):
+    CLIENT_SECRET_FILE='static/assets/client_secret_PsyCura.json'
+    API_NAME='calendar'
+    API_VERSION='v3'
+    SCOPES=['https://www.googleapis.com/auth/calendar']
+    calendar_id = '5lnu2uakgegiudqs7taniti1bs@group.calendar.google.com'
+
+    service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+    event_request_body = {
+        'start': {
+            'dateTime': convert_to_RFC_datetime(year, month, day, hour, minute),
+            'timeZone': 'Asia/Kolkata',
+        },
+        'end': {
+            'dateTime': convert_to_RFC_datetime(year, month, day, hour+1, minute),
+            'timeZone': 'Asia/Kolkata',
+        },
+        'summary': 'PsyCura Appointment',
+        'description': 'Meeting',
+        'colorId': 1,
+        'attendees': [
+            {
+                'email': str(doctor.user.email),
+                'displayName': str(doctor.user.first_name) + ' ' + str(doctor.user.last_name),
+                'organizer': True,
+                'self': True,
+                'resource': False,
+                'optional': False,
+                'responseStatus': 'accepted',
+            },
+            {
+                'email': str(patient.user.email),
+                'displayName': str(patient.user.first_name) + ' ' + str(patient.user.last_name),
+                'organizer': False,
+                'self': False,
+                'resource': False,
+                'optional': False,
+                'responseStatus': 'accepted',
+            }
+        ],
+    }
+
+    service.events().insert(calendarId=calendar_id, body=event_request_body).execute()
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['patient'])
+def p_doctor_card(request, d_id):
+        patient = Patient.objects.get(user=request.user)
+        doctor = Doctor.objects.get(pk=d_id)
+
+        if request.method == 'POST':
+            date = request.POST.get('date')
+            time = request.POST.get('time')
+
+            year, month, day, hour, minute = int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2])-5, int(time[3:5])-30
+            if minute < 0:
+                hour = hour-1
+                minute = minute+60
+
+            appointment = Appointment.objects.create(doctor=doctor, patient=patient, date=date, start_time=str(hour)+':'+str(minute)+':00', end_time=str(hour+1)+':'+str(minute)+':00')
+            appointment.save()
+            calendar_API(doctor, patient, year, month, day, hour, minute)            
+            
+            return redirect('Users:p_appointments_future')
+
+        return render(request, 'Users/patient/doctors/d_card.html', {'patient':patient, 'doctor':doctor})
 
 
 @login_required(login_url='sign_in')
@@ -137,7 +132,76 @@ def wallet(request):
     return render(request,"Users/patient/wallet.html", {"patient":patient,"mssg":mssg})
 
 
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['patient'])
+def p_appointments_future(request):
+    patient = Patient.objects.get(user=request.user)
+    date = datetime.now()
+    date = date.strftime("%Y-%m-%d")
+    time = datetime.now()
+    time = time.strftime("%H:%M:%S")
 
+    c_year, c_month, c_day, c_hour, c_minute = int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2]), int(time[3:5])
+
+    appointments = Appointment.objects.all().filter(patient=patient)
+    appointments_future = []
+    for appointment in appointments:
+        date = appointment.date
+        time = appointment.start_time
+        a_year, a_month, a_day, a_hour, a_minute = int(str(date)[0:4]), int(str(date)[5:7]), int(str(date)[8:10]), int(str(time)[0:2]), int(str(time)[3:5])
+
+        if a_year > c_year:
+            appointments_future.append(appointment)
+        elif a_year == c_year:
+            if a_month > c_month:
+                appointments_future.append(appointment)
+            elif a_month == c_month:
+                if a_day > c_day:
+                    appointments_future.append(appointment)
+                elif a_day == c_day:
+                    if a_hour > c_hour:
+                        appointments_future.append(appointment)
+                    elif a_hour == c_hour:
+                        if a_minute > c_minute:
+                            appointments_future.append(appointment)
+
+    return render(request, 'Users/patient/appointments/a_list.html', {'patient':patient, 'appointments':appointments_future})
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['patient'])
+def p_appointments_past(request):
+    patient = Patient.objects.get(user=request.user)
+    date = datetime.now()
+    date = date.strftime("%Y-%m-%d")
+    time = datetime.now()
+    time = time.strftime("%H:%M:%S")
+
+    c_year, c_month, c_day, c_hour, c_minute = int(date[0:4]), int(date[5:7]), int(date[8:10]), int(time[0:2]), int(time[3:5])
+
+    appointments = Appointment.objects.all().filter(patient=patient)
+    appointments_past = []
+    for appointment in appointments:
+        date = appointment.date
+        time = appointment.start_time
+        a_year, a_month, a_day, a_hour, a_minute = int(str(date)[0:4]), int(str(date)[5:7]), int(str(date)[8:10]), int(str(time)[0:2]), int(str(time)[3:5])
+
+        if a_year < c_year:
+            appointments_past.append(appointment)
+        elif a_year == c_year:
+            if a_month < c_month:
+                appointments_past.append(appointment)
+            elif a_month == c_month:
+                if a_day < c_day:
+                    appointments_past.append(appointment)
+                elif a_day == c_day:
+                    if a_hour < c_hour:
+                        appointments_past.append(appointment)
+                    elif a_hour == c_hour:
+                        if a_minute < c_minute:
+                            appointments_past.append(appointment)
+
+    return render(request, 'Users/patient/appointments/a_list.html', {'patient':patient, 'appointments':appointments_past})
 
 
 

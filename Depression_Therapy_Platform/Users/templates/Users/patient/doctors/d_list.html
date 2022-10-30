@@ -20,9 +20,9 @@
     </a>
 </li>
 <li>
-    <a href="{% url 'Patient_Doctor_Bridge:appointments' %}">
+    <a href="{% url 'Users:p_appointments_future' %}">
         <i class="bx bx-book-add"></i>
-        <span class="links_name">Scheduled Appointments</span>
+        <span class="links_name">Appointments</span>
     </a>
 </li>
 {% endblock %}
@@ -41,7 +41,7 @@
 
 {% block home_section %}
 {% for doctor in doctors %}
-<a href="{% url 'Users:p_appoint' doctor.pk %}">
+<a href="{% url 'Users:p_doctor_card' doctor.pk %}">
     <div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
         style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
 
