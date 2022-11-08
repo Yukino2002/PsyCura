@@ -15,6 +15,8 @@ urlpatterns = [
     path('p/forums', views.p_forums, name='p_forums'),
 
     path('d/profile', views.d_home, name='d_home'), 
+    path('d/appointments/future',views.d_appointments_future, name="d_appointments_future"),
+    path('d/appointments/past',views.d_appointments_past, name="d_appointments_past"), 
     
     path('s/profile', views.s_home, name='s_home'), 
     

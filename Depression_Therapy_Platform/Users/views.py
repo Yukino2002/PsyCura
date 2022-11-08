@@ -188,7 +188,39 @@ def p_forums(request):
 @allowed_users(allowed_users=['doctor'])
 def d_home(request):
     doctor = Doctor.objects.get(pk = request.user.id)
-    return render(request, 'Users/doctor/home.html', {'doctor':doctor})
+    return render(request, 'Users/doctor/profile/profile.html', {'doctor':doctor})
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['doctor'])
+def d_appointments_future(request):
+    c = current_time()
+
+    doctor = Doctor.objects.get(user=request.user)
+    appointments = Appointment.objects.all().filter(doctor=doctor)
+    appointments_future = []
+    for appointment in appointments:
+        a = appointment_time(appointment)
+        if a[0] > c[0] or (a[0] == c[0] and a[1] > c[1]) or (a[0] == c[0] and a[1] == c[1] and a[2] > c[2]) or (a[0] == c[0] and a[1] == c[1] and a[2] == c[2] and a[3] > c[3]) or (a[0] == c[0] and a[1] == c[1] and a[2] == c[2] and a[3] == c[3] and a[4] > c[4]):
+            appointments_future.append(appointment)
+
+    return render(request, 'Users/doctor/appointments/a_list.html', {'doctor':doctor, 'appointments':appointments_future})
+
+
+@login_required(login_url='sign_in')
+@allowed_users(allowed_users=['doctor'])
+def d_appointments_past(request):
+    c = current_time()
+    
+    doctor = Doctor.objects.get(user=request.user)
+    appointments = Appointment.objects.all().filter(doctor=doctor)
+    appointments_past = []
+    for appointment in appointments:
+        a = appointment_time(appointment)
+        if a[0] < c[0] or (a[0] == c[0] and a[1] < c[1]) or (a[0] == c[0] and a[1] == c[1] and a[2] < c[2]) or (a[0] == c[0] and a[1] == c[1] and a[2] == c[2] and a[3] < c[3]) or (a[0] == c[0] and a[1] == c[1] and a[2] == c[2] and a[3] == c[3] and a[4] < c[4]):
+            appointments_past.append(appointment)
+
+    return render(request, 'Users/doctor/appointments/a_list.html', {'doctor':doctor, 'appointments':appointments_past})
 
 
 @login_required(login_url='sign_in')

@@ -1,0 +1,50 @@
+{% extends 'Users/doctor/doctor_base.html' %}
+
+{% block sidebar_items %}
+<li>
+    <a href="{% url 'Users:d_appointments_future' %}" id="future">
+        <i class="bx bx-book-add"></i>
+        <span class="links_name">Upcoming</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'Users:d_appointments_past' %}" id="past">
+        <i class="bx bx-book-add"></i>
+        <span class="links_name">Past</span>
+    </a>
+</li>
+{% endblock %}
+
+{% block home_section %}
+{% for appointment in appointments %}
+<div class="pt-7 pb-9 px-11 bg-white rounded-lg shadow border-1"
+    style="position: relative; display: inline-block; width: 94%; margin-left: 3%; margin-right: 3%; margin-top: 3%;">
+
+    <div class="flex flex-col items-start w-full m-auto sm:flex-row">
+        <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
+            <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
+                <h1 class="text-lg font-semibold text-gray-800 sm:text-xl" style="font-size: 200%;">
+                    Doctor: {{appointment.doctor.user.first_name}} {{appointment.doctor.user.last_name}}</h1>
+            </div>
+            <div class="items-center justify-between mt-4 ">
+                <div class="flex"><span class="mr-1 font-semibold">{{appointment.doctor.get_specialization_display}}</span></div>
+                <div class="flex"><span class="mr-1 font-semibold">Date: {{appointment.date}}</span></div>
+                <div class="flex"><span class="mr-1 font-semibold">Timing: {{appointment.start_time}}</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<br><br><br>
+
+<script>
+    var url = window.location.href;
+    var url = url.substring(url.lastIndexOf('/') + 1);
+
+    if (url == "future") {
+        document.getElementById("future").classList.add("active");
+    } else if (url == "past") {
+        document.getElementById("past").classList.add("active");
+    }
+</script>
+{% endblock %}
